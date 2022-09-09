@@ -948,7 +948,7 @@ const MarketDetails: React.FC<MarketDetailsProps> = ({ market, selectedSide, set
                                                 }}
                                             />
                                             <MaxButton disabled={isFetching} onClick={onMaxUsdClick}>
-                                                Max
+                                                {t('markets.market-details.max')}
                                             </MaxButton>
                                         </AmountToBuyContainer>
                                     </CustomTooltip>
@@ -976,7 +976,7 @@ const MarketDetails: React.FC<MarketDetailsProps> = ({ market, selectedSide, set
                                                 value={tokenAmount}
                                             />
                                             <MaxButton disabled={isFetching} onClick={onMaxClick}>
-                                                Max
+                                                {t('markets.market-details.max')}
                                             </MaxButton>
                                         </AmountToBuyContainer>
                                     </CustomTooltip>
