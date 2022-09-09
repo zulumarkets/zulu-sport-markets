@@ -13,8 +13,6 @@ import { formatCurrency } from '../../utils/formatters/number';
 import { getIsAppReady } from '../../redux/modules/app';
 import useOvertimeVoucherQuery from '../../queries/wallet/useOvertimeVoucherQuery';
 
-// type ConnectButtonProps = {};
-
 const ConnectButton: React.FC = () => {
     const { t } = useTranslation();
     const networkId = useSelector((state: RootState) => getNetworkId(state));
@@ -62,17 +60,9 @@ const ConnectButton: React.FC = () => {
                     >
                         <WalletContainer hasVoucher={!!overtimeVoucher}>
                             {(() => {
-                                if (!connected || chain.unsupported) {
+                                if (!connected) {
                                     return <Info onClick={openConnectModal}>Connect Wallet</Info>;
                                 }
-
-                                // if (chain.unsupported) {
-                                //     return (
-                                //         <button onClick={openChainModal} type="button">
-                                //             Wrong network
-                                //         </button>
-                                //     );
-                                // }
 
                                 return (
                                     <FlexDivRowCentered onClick={openAccountModal}>
@@ -88,43 +78,6 @@ const ConnectButton: React.FC = () => {
                                         </Balance>
                                     </FlexDivRowCentered>
                                 );
-
-                                // return (
-                                //     <div style={{ display: 'flex', gap: 12 }}>
-                                //         <button
-                                //             onClick={openChainModal}
-                                //             style={{ display: 'flex', alignItems: 'center' }}
-                                //             type="button"
-                                //         >
-                                //             {chain.hasIcon && (
-                                //                 <div
-                                //                     style={{
-                                //                         background: chain.iconBackground,
-                                //                         width: 12,
-                                //                         height: 12,
-                                //                         borderRadius: 999,
-                                //                         overflow: 'hidden',
-                                //                         marginRight: 4,
-                                //                     }}
-                                //                 >
-                                //                     {chain.iconUrl && (
-                                //                         <img
-                                //                             alt={chain.name ?? 'Chain icon'}
-                                //                             src={chain.iconUrl}
-                                //                             style={{ width: 12, height: 12 }}
-                                //                         />
-                                //                     )}
-                                //                 </div>
-                                //             )}
-                                //             {chain.name}
-                                //         </button>
-                                //
-                                //         <button onClick={openAccountModal} type="button">
-                                //             {account.displayName}
-                                //             {account.displayBalance ? ` (${account.displayBalance})` : ''}
-                                //         </button>
-                                //     </div>
-                                // );
                             })()}
                         </WalletContainer>
                     </div>
