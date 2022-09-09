@@ -15,7 +15,7 @@ import { formatCurrency, formatCurrencyWithKey } from 'utils/formatters/number';
 import useOvertimeVoucherQuery from 'queries/wallet/useOvertimeVoucherQuery';
 import Tooltip from 'components/Tooltip';
 import OvertimeVoucherPopup from 'components/OvertimeVoucherPopup';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+import ConnectButton from 'components/ConnectButton';
 
 const WalletInfo: React.FC = () => {
     const { t } = useTranslation();
