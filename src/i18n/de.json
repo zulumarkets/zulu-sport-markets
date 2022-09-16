@@ -122,10 +122,17 @@
             "rows-per-page": "Zeilen pro Seite:",
             "page": "Buchseite"
         },
-        "coming-soon": "Demnächst!"
+        "coming-soon": "Demnächst!",
+        "h2h-tooltip": "This is a head-to-head market. The winner will be the driver who finished on a better place in the main race."
     },
     "footer": {
-        "all-rights-reserved": "© {{year}} eXoticV ALLE RECHTE VORBEHALTEN."
+        "all-rights-reserved": "© {{year}} eXoticV ALLE RECHTE VORBEHALTEN.",
+        "github": "GitHub",
+        "docs": "Dokumente",
+        "twitter": "Twitter",
+        "medium": "Mittel",
+        "discord": "Zwietracht",
+        "tutorial": "Lernprogramm"
     },
     "market": {
         "question-label": "Frage",
@@ -172,6 +179,8 @@
                 "football": "American Football",
                 "ufc": "MMA",
                 "baseball": "Baseball",
+                "formula1": "Formel 1",
+                "motogp": "MotoGP",
                 "soon": "Bald mehr Sportarten!"
             },
             "all": "Alles",
@@ -223,7 +232,7 @@
             "claim": "Einfordern",
             "coming-soon": "Bald",
             "vs": "VS",
-            "draw": "Unentschieden"
+            "draw": "X"
         },
         "market-details": {
             "price": "Preis",
