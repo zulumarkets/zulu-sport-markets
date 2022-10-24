@@ -54,6 +54,9 @@ export const Section = styled(FlexDivColumn)`
         @media (max-width: 960px) {
             margin-top: 200px;
         }
+        @media (max-width: 400px) {
+            margin-top: 30px;
+        }
     }
     &.fifth {
         margin-top: 250px;
@@ -74,10 +77,10 @@ export const Section = styled(FlexDivColumn)`
         }
         @media (max-width: 500px) {
             margin-top: 100px;
+            margin-bottom: 100px;
         }
         @media (max-width: 450px) {
             margin-top: 50px;
-            margin-bottom: 150px;
         }
     }
 `;
