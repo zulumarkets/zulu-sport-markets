@@ -8,11 +8,9 @@ const BannerCarousel: React.FC = () => {
     useEffect(() => {
         const map = {} as Record<number, string>;
         const fetchData = async () => {
-            for (let i = 1; i <= 3; i++) {
+            for (let i = 1; i <= 5; i++) {
                 try {
-                    const response = await fetch(
-                        `https://raw.githubusercontent.com/thales-markets/thales-sport-markets/dev/src/assets/images/banner/${i}/json.json`
-                    );
+                    const response = await fetch(`https://api.thalesmarket.io/banner-json/${i}`);
                     if (response) {
                         const json = await response.json();
                         map[i] = json.url;
@@ -44,12 +42,16 @@ const BannerCarousel: React.FC = () => {
                 <StyledDiv hasHref={!!urlMap[1]} index={1} />
                 <StyledDiv hasHref={!!urlMap[2]} index={2} />
                 <StyledDiv hasHref={!!urlMap[3]} index={3} />
+                <StyledDiv hasHref={!!urlMap[3]} index={4} />
+                <StyledDiv hasHref={!!urlMap[3]} index={5} />
             </Carousel>
         </Container>
     );
 };
 
 const Container = styled.div`
+    position: relative;
+    z-index: 0;
     width: 1700px;
     height: 165px;
     border: 1.4px solid #5f6180;
@@ -67,8 +69,7 @@ const StyledDiv = styled.div<{ index: number; hasHref?: boolean }>`
     width: 1700px;
     height: 165px;
     margin: -1px;
-    background-image: ${(props) =>
-        `url(https://raw.githubusercontent.com/thales-markets/thales-sport-markets/dev/src/assets/images/banner/${props.index}/image.jpg)`};
+    background-image: ${(props) => `url(https://api.thalesmarket.io/banner-image/${props.index})`};
     cursor: ${(props) => (props.hasHref ? 'pointer' : 'default')};
     background-position: center;
 `;
