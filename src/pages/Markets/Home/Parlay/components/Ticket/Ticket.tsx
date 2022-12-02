@@ -542,7 +542,7 @@ const Ticket: React.FC<TicketProps> = ({ markets, parlayPayment, setMarketsOutOf
         setShowShareTicketModal(false);
     }, []);
 
-    const twitterShareDisabled = submitDisabled || !hasAllowance;
+    // TODO: const twitterShareDisabled = submitDisabled || !hasAllowance;
     const onTwitterIconClick = () => {
         // create data copy to avoid modal re-render while opened
         const modalData: ShareTicketModalProps = {
@@ -553,7 +553,8 @@ const Ticket: React.FC<TicketProps> = ({ markets, parlayPayment, setMarketsOutOf
             onClose: onModalClose,
         };
         setShareTicketModalData(modalData);
-        setShowShareTicketModal(!twitterShareDisabled);
+        setShowShareTicketModal(true);
+        // TODO: setShowShareTicketModal(!twitterShareDisabled);
     };
 
     return (
