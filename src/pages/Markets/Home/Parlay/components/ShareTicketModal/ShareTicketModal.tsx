@@ -96,11 +96,11 @@ const ShareTicketModal: React.FC<ShareTicketModalProps> = ({ markets, totalQuote
                         link.href = base64Image;
                         link.download = PARLAY_IMAGE_NAME;
                         document.body.appendChild(link);
-                        setTimeout(() => {
+                        await setTimeout(() => {
                             link.click();
                             // Cleanup the DOM
                             document.body.removeChild(link);
-                        }, 15000); // fix for iOS
+                        }, 10000); // fix for iOS
                     } else {
                         // Save to clipboard
                         const b64Blob = (await fetch(base64Image)).blob();
