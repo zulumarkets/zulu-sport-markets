@@ -92,7 +92,9 @@ const ShareTicketModal: React.FC<ShareTicketModalProps> = ({ markets, totalQuote
                     link.href = base64Image;
                     link.download = PARLAY_IMAGE_NAME;
                     document.body.appendChild(link);
-                    link.click();
+                    setTimeout(() => {
+                        link.click();
+                    }, 15000);
                 } catch (e) {
                     console.log(e);
                     setIsLoading(false);
