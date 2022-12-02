@@ -98,11 +98,9 @@ const ShareTicketModal: React.FC<ShareTicketModalProps> = ({ markets, totalQuote
                         document.body.appendChild(link);
                         setTimeout(() => {
                             link.click();
-                        }, 500); // fix for iOS
-                        setTimeout(() => {
                             // Cleanup the DOM
                             document.body.removeChild(link);
-                        }, 10000); // fix for iOS
+                        }, 3000); // fix for iOS
                     } else {
                         // Save to clipboard
                         const b64Blob = (await fetch(base64Image)).blob();
