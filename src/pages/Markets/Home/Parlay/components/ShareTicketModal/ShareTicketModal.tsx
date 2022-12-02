@@ -1,4 +1,5 @@
-import { getErrorToastOptions, defaultToastOptions } from 'config/toast';
+import { getSuccessToastOptions, getErrorToastOptions, defaultToastOptions } from 'config/toast';
+import { LINKS } from 'constants/links';
 import { toPng } from 'html-to-image';
 import { t } from 'i18next';
 import React, { useRef, useState, useCallback, useEffect } from 'react';
@@ -27,6 +28,8 @@ export type ShareTicketModalProps = {
 };
 
 const PARLAY_IMAGE_NAME = 'ParlayImage.png';
+const TWITTER_MESSAGE_PASTE = '%0A<PASTE YOUR IMAGE>';
+const TWITTER_MESSAGE_UPLOAD = `%0A<UPLOAD YOUR ${PARLAY_IMAGE_NAME}>`;
 
 const ShareTicketModal: React.FC<ShareTicketModalProps> = ({ markets, totalQuote, paid, payout, onClose }) => {
     const isMobile = useSelector((state: RootState) => getIsMobile(state));
@@ -87,14 +90,68 @@ const ShareTicketModal: React.FC<ShareTicketModalProps> = ({ markets, totalQuote
                 try {
                     const base64Image = await toPng(ref.current, { cacheBust: true });
 
-                    // Download image
-                    const link = document.createElement('a');
-                    link.href = base64Image;
-                    link.download = PARLAY_IMAGE_NAME;
-                    document.body.appendChild(link);
-                    setTimeout(() => {
-                        link.click();
-                    }, 15000);
+                    if (useDownloadImage) {
+                        // Download image
+                        const link = document.createElement('a');
+                        link.href = base64Image;
+                        link.download = PARLAY_IMAGE_NAME;
+                        document.body.appendChild(link);
+                        setTimeout(() => {
+                            link.click();
+                            // Cleanup the DOM
+                            document.body.removeChild(link);
+                        }, 15000); // fix for iOS
+                    } else {
+                        // Save to clipboard
+                        const b64Blob = (await fetch(base64Image)).blob();
+                        const cbi = new ClipboardItem({
+                            'image/png': b64Blob,
+                        });
+                        await navigator.clipboard.write([cbi]); // not supported by FF
+                    }
+
+                    if (ref.current === null) {
+                        return;
+                    }
+
+                    const twitterLinkWithStatusMessage =
+                        LINKS.TwitterTweetStatus +
+                        LINKS.Overtime +
+                        (useDownloadImage ? TWITTER_MESSAGE_UPLOAD : TWITTER_MESSAGE_PASTE);
+
+                    // Mobile requires user action in order to open new window, it can't open in async call
+                    isMobile
+                        ? toast.update(
+                              toastIdParam,
+                              getSuccessToastOptions(
+                                  <a onClick={() => window.open(twitterLinkWithStatusMessage)}>
+                                      {t('market.toast-message.click-open-twitter')}
+                                  </a>,
+                                  { autoClose: 10 * 1000 }
+                              )
+                          )
+                        : toast.update(
+                              toastIdParam,
+                              getSuccessToastOptions(
+                                  <>
+                                      {!useDownloadImage && (
+                                          <>
+                                              {t('market.toast-message.image-in-clipboard')}
+                                              <br />
+                                          </>
+                                      )}
+                                      {t('market.toast-message.open-twitter')}
+                                  </>
+                              )
+                          );
+
+                    if (!isMobile) {
+                        setTimeout(() => {
+                            window.open(twitterLinkWithStatusMessage);
+                            setIsLoading(false);
+                        }, 3000);
+                    }
+                    onClose();
                 } catch (e) {
                     console.log(e);
                     setIsLoading(false);
@@ -102,7 +159,7 @@ const ShareTicketModal: React.FC<ShareTicketModalProps> = ({ markets, totalQuote
                 }
             }
         },
-        [isLoading]
+        [isLoading, isMobile, useDownloadImage, onClose]
     );
 
     const onTwitterShareClick = () => {
