@@ -648,7 +648,8 @@ const Ticket: React.FC<TicketProps> = ({ markets, parlayPayment, setMarketsOutOf
             </RowSummary>
             <FlexDivCentered>{getSubmitButton()}</FlexDivCentered>
             <ShareWrapper>
-                <TwitterIcon disabled={twitterShareDisabled} onClick={onTwitterIconClick} />
+                {/* TODO: twitterShareDisabled*/}
+                <TwitterIcon disabled={false} onClick={onTwitterIconClick} />
             </ShareWrapper>
             {showShareTicketModal && (
                 <ShareTicketModal
