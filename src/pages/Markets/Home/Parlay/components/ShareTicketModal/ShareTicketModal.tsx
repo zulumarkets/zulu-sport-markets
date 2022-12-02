@@ -87,7 +87,8 @@ const ShareTicketModal: React.FC<ShareTicketModalProps> = ({ markets, totalQuote
                     return;
                 }
 
-                const IOS_DOWNLOAD_DELAY = 10 * 1000; // 10 seconds
+                const IOS_DOWNLOAD_DELAY = 15 * 1000; // 15 seconds
+                const MOBILE_TWITTER_TOAST_AUTO_CLOSE = 15 * 1000; // 15 seconds
                 try {
                     const base64Image = await toPng(ref.current, { cacheBust: true });
 
@@ -133,7 +134,7 @@ const ShareTicketModal: React.FC<ShareTicketModalProps> = ({ markets, totalQuote
                                           <a onClick={() => window.open(twitterLinkWithStatusMessage)}>
                                               {t('market.toast-message.click-open-twitter')}
                                           </a>,
-                                          { autoClose: 10 * 1000 }
+                                          { autoClose: MOBILE_TWITTER_TOAST_AUTO_CLOSE }
                                       )
                                   );
                               }, IOS_DOWNLOAD_DELAY)
@@ -143,7 +144,7 @@ const ShareTicketModal: React.FC<ShareTicketModalProps> = ({ markets, totalQuote
                                       <a onClick={() => window.open(twitterLinkWithStatusMessage)}>
                                           {t('market.toast-message.click-open-twitter')}
                                       </a>,
-                                      { autoClose: 10 * 1000 }
+                                      { autoClose: MOBILE_TWITTER_TOAST_AUTO_CLOSE }
                                   )
                               )
                         : toast.update(
