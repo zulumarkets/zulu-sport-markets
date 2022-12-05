@@ -16,7 +16,7 @@ import { DisplayOptionsType } from './components/DisplayOptions/DisplayOptions';
 import { useSelector } from 'react-redux';
 import { RootState } from 'redux/rootReducer';
 import { getIsMobile } from 'redux/modules/app';
-import { isMetamask, isFirefox } from 'utils/device';
+import { isMetamask, isFirefox, isIos } from 'utils/device';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 export type ShareTicketModalProps = {
@@ -87,10 +87,10 @@ const ShareTicketModal: React.FC<ShareTicketModalProps> = ({ markets, totalQuote
                     return;
                 }
 
-                // const IOS_DOWNLOAD_DELAY = 15 * 1000; // 15 seconds
-                // const MOBILE_TWITTER_TOAST_AUTO_CLOSE = 15 * 1000; // 15 seconds
+                const IOS_DOWNLOAD_DELAY = 15 * 1000; // 15 seconds
+                const MOBILE_TWITTER_TOAST_AUTO_CLOSE = 15 * 1000; // 15 seconds
                 try {
-                    const base64Image = await toPng(ref.current, { cacheBust: true });
+                    const base64Image = await toPng(ref.current);
 
                     if (useDownloadImage) {
                         // Download image
@@ -101,8 +101,10 @@ const ShareTicketModal: React.FC<ShareTicketModalProps> = ({ markets, totalQuote
                         setTimeout(
                             () => {
                                 link.click();
+                                // Cleanup the DOM
+                                document.body.removeChild(link);
                             },
-                            500 // fix for iOS
+                            isIos() ? IOS_DOWNLOAD_DELAY : 0 // fix for iOS
                         );
                     } else {
                         // Save to clipboard
@@ -124,27 +126,27 @@ const ShareTicketModal: React.FC<ShareTicketModalProps> = ({ markets, totalQuote
 
                     // Mobile requires user action in order to open new window, it can't open in async call, so adding <a>
                     isMobile
-                        ? //isIos()
-                          // ? setTimeout(() => {
-                          //   toast.update(
-                          //       toastIdParam,
-                          //       getSuccessToastOptions(
-                          //           <a onClick={() => window.open(twitterLinkWithStatusMessage)}>
-                          //               {t('market.toast-message.click-open-twitter')}
-                          //           </a>,
-                          //           { autoClose: false }
-                          //       )
-                          //   )
-                          //  }, IOS_DOWNLOAD_DELAY)
-                          toast.update(
-                              toastIdParam,
-                              getSuccessToastOptions(
-                                  <a onClick={() => window.open(twitterLinkWithStatusMessage)}>
-                                      {t('market.toast-message.click-open-twitter')}
-                                  </a>,
-                                  { autoClose: false }
+                        ? isIos()
+                            ? setTimeout(() => {
+                                  toast.update(
+                                      toastIdParam,
+                                      getSuccessToastOptions(
+                                          <a onClick={() => window.open(twitterLinkWithStatusMessage)}>
+                                              {t('market.toast-message.click-open-twitter')}
+                                          </a>,
+                                          { autoClose: MOBILE_TWITTER_TOAST_AUTO_CLOSE }
+                                      )
+                                  );
+                              }, IOS_DOWNLOAD_DELAY)
+                            : toast.update(
+                                  toastIdParam,
+                                  getSuccessToastOptions(
+                                      <a onClick={() => window.open(twitterLinkWithStatusMessage)}>
+                                          {t('market.toast-message.click-open-twitter')}
+                                      </a>,
+                                      { autoClose: MOBILE_TWITTER_TOAST_AUTO_CLOSE }
+                                  )
                               )
-                          )
                         : toast.update(
                               toastIdParam,
                               getSuccessToastOptions(
@@ -165,8 +167,8 @@ const ShareTicketModal: React.FC<ShareTicketModalProps> = ({ markets, totalQuote
                             window.open(twitterLinkWithStatusMessage);
                             setIsLoading(false);
                         }, 3000);
-                        onClose();
                     }
+                    onClose();
                 } catch (e) {
                     console.log(e);
                     setIsLoading(false);
