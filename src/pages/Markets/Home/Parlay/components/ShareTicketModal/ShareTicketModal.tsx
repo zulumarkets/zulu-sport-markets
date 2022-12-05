@@ -87,7 +87,7 @@ const ShareTicketModal: React.FC<ShareTicketModalProps> = ({ markets, totalQuote
                     return;
                 }
 
-                const IOS_DOWNLOAD_DELAY = 30 * 1000; // 30 seconds
+                const IOS_DOWNLOAD_DELAY = 40 * 1000; // 40 seconds
                 const MOBILE_TWITTER_TOAST_AUTO_CLOSE = 15 * 1000; // 15 seconds
                 try {
                     const base64Image = await toPng(ref.current, { cacheBust: true });
