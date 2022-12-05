@@ -87,7 +87,7 @@ const ShareTicketModal: React.FC<ShareTicketModalProps> = ({ markets, totalQuote
                     return;
                 }
 
-                const IOS_DOWNLOAD_DELAY = 15 * 1000; // 15 seconds
+                const IOS_DOWNLOAD_DELAY = 20 * 1000; // 20 seconds
                 const MOBILE_TWITTER_TOAST_AUTO_CLOSE = 15 * 1000; // 15 seconds
                 try {
                     const base64Image = await toPng(ref.current, { cacheBust: true });
@@ -124,7 +124,7 @@ const ShareTicketModal: React.FC<ShareTicketModalProps> = ({ markets, totalQuote
                         LINKS.Overtime +
                         (useDownloadImage ? TWITTER_MESSAGE_UPLOAD : TWITTER_MESSAGE_PASTE);
 
-                    // Mobile requires user action in order to open new window, it can't open in async call
+                    // Mobile requires user action in order to open new window, it can't open in async call, so adding <a>
                     isMobile
                         ? isIos()
                             ? setTimeout(() => {
