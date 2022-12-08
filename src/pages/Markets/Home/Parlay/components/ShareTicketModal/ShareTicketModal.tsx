@@ -80,6 +80,7 @@ const ShareTicketModal: React.FC<ShareTicketModalProps> = ({ markets, totalQuote
     // Download image desktop: clipboard.write not supported/enabled in Firefox
     const useDownloadImage = isMobile || isFirefox();
 
+    const anchRef = useRef<HTMLAnchorElement>(null);
     const saveImageAndOpenTwitter = useCallback(
         async (toastIdParam: string | number) => {
             if (!isLoading) {
@@ -94,18 +95,21 @@ const ShareTicketModal: React.FC<ShareTicketModalProps> = ({ markets, totalQuote
 
                     if (useDownloadImage) {
                         // Download image
-                        const link = document.createElement('a');
-                        link.href = base64Image;
-                        link.download = PARLAY_IMAGE_NAME;
-                        document.body.appendChild(link);
-                        link.click();
-                        setTimeout(
-                            () => {
-                                // Cleanup the DOM
-                                document.body.removeChild(link);
-                            },
-                            isIos() ? IOS_DOWNLOAD_DELAY : 0 // fix for iOS
-                        );
+                        // const link = document.createElement('a');
+                        console.log(anchRef?.current);
+                        if (anchRef?.current) {
+                            anchRef.current.href = base64Image;
+                        }
+                        // link.download = PARLAY_IMAGE_NAME;
+                        // document.body.appendChild(link);
+                        // link.click();
+                        // setTimeout(
+                        //     () => {
+                        //         // Cleanup the DOM
+                        //         document.body.removeChild(link);
+                        //     },
+                        //     isIos() ? IOS_DOWNLOAD_DELAY : 0 // fix for iOS
+                        // );
                     } else {
                         // Save to clipboard
                         const b64Blob = (await fetch(base64Image)).blob();
@@ -168,7 +172,7 @@ const ShareTicketModal: React.FC<ShareTicketModalProps> = ({ markets, totalQuote
                             setIsLoading(false);
                         }, 3000);
                     }
-                    onClose();
+                    // onClose();
                 } catch (e) {
                     console.log(e);
                     setIsLoading(false);
@@ -235,6 +239,9 @@ const ShareTicketModal: React.FC<ShareTicketModalProps> = ({ markets, totalQuote
                 )}
             >
                 <Container ref={ref} isSimpleView={displayOptions.isSimpleView}>
+                    <a ref={anchRef} download={'test.png'} href={'#'}>
+                        Download
+                    </a>
                     {!isMobile && <CloseIcon className={`icon icon--close`} onClick={onClose} />}
                     {displayOptions.isSimpleView ? (
                         <MySimpleTicket markets={markets} payout={payout} />
