@@ -1,34 +1,55 @@
-import { useLocation } from 'react-router-dom';
+import burger from 'assets/images/burger.svg';
 import Logo from 'components/Logo';
+import MintVoucher from 'components/MintVoucher';
+import NavMenu from 'components/NavMenu';
+import NavMenuMobile from 'components/NavMenuMobile';
+import Search from 'components/Search';
 import WalletInfo from 'components/WalletInfo';
+import ROUTES from 'constants/routes';
+import { MAIN_COLORS } from 'constants/ui';
+import useInterval from 'hooks/useInterval';
+import useClaimablePositionCountQuery from 'queries/markets/useClaimablePositionCountQuery';
 import React, { useState } from 'react';
+import ReactModal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { getIsMobile } from 'redux/modules/app';
+import { getMarketSearch, setMarketSearch } from 'redux/modules/market';
+import { getStopPulsing, setStopPulsing } from 'redux/modules/ui';
+import { getIsWalletConnected, getNetworkId, getWalletAddress } from 'redux/modules/wallet';
 import { RootState } from 'redux/rootReducer';
 import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
 import { FlexDivRow, FlexDivRowCentered } from 'styles/common';
-import { getIsWalletConnected } from 'redux/modules/wallet';
-// import Referral from 'components/Referral';
-import { buildHref } from 'utils/routes';
-import SPAAnchor from 'components/SPAAnchor';
-import ROUTES from 'constants/routes';
-import { getStopPulsing, setStopPulsing } from 'redux/modules/ui';
-import useInterval from 'hooks/useInterval';
-// import MintVoucher from 'components/MintVoucher';
-import burger from 'assets/images/burger.svg';
-import NavMenu from 'components/NavMenu';
 import ProfileItem from './components/ProfileItem';
-import { getIsMobile } from 'redux/modules/app';
-import { ReactComponent as RightBall } from 'assets/images/favorite-team/right-ball.svg';
-import { ReactComponent as LeftBall } from 'assets/images/favorite-team/left-ball.svg';
-import { ReactComponent as QatarMascot } from 'assets/images/favorite-team/qatar-mascot.svg';
 
 const PULSING_COUNT = 10;
 
+const customModalStyles = {
+    content: {
+        top: '85px',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        padding: '0px',
+        background: 'transparent',
+        border: 'none',
+        width: '100%',
+        height: '40px',
+    },
+    overlay: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        zIndex: '5',
+    },
+};
+
 const DappHeader: React.FC = () => {
-    const { t } = useTranslation();
     const dispatch = useDispatch();
     const location = useLocation();
+
+    const networkId = useSelector((state: RootState) => getNetworkId(state));
+    const walletAddress = useSelector((state: RootState) => getWalletAddress(state)) || '';
 
     const isWalletConnected = useSelector((state: RootState) => getIsWalletConnected(state));
     const stopPulsing = useSelector((state: RootState) => getStopPulsing(state));
@@ -36,6 +57,17 @@ const DappHeader: React.FC = () => {
 
     const [currentPulsingCount, setCurrentPulsingCount] = useState<number>(0);
     const [navMenuVisibility, setNavMenuVisibility] = useState<boolean | null>(null);
+    const [showSearcHModal, setShowSearchModal] = useState<boolean>(false);
+    const marketSearch = useSelector((state: RootState) => getMarketSearch(state));
+
+    const claimablePositionsCountQuery = useClaimablePositionCountQuery(walletAddress, networkId, {
+        enabled: isWalletConnected,
+    });
+
+    const claimablePositionCount =
+        claimablePositionsCountQuery.isSuccess && claimablePositionsCountQuery.data
+            ? claimablePositionsCountQuery.data
+            : null;
 
     useInterval(async () => {
         if (!stopPulsing) {
@@ -52,46 +84,69 @@ const DappHeader: React.FC = () => {
                 <Container>
                     <Logo />
                     <RightContainer>
-                        {/* <Referral /> */}
-                        {/* {location.pathname !== ROUTES.MintWorldCupNFT && <MintVoucher />} */}
-                        {location.pathname !== ROUTES.MintWorldCupNFT && (
-                            <SPAAnchor href={buildHref(ROUTES.MintWorldCupNFT)}>
-                                <StyledButton style={{ marginRight: '10px' }} disabled={!isWalletConnected}>
-                                    <StyledQatarMascot />
-                                    <LeftBallStyled />
-                                    {t('mint-world-cup-nft.zebro-campaign')}
-                                    <RightBallStyled />
-                                </StyledButton>
-                            </SPAAnchor>
-                        )}
-                        {/* <SPAAnchor href={buildHref(ROUTES.Quiz)}>
-                            <StyledSportTriviaIcon stopPulsing={stopPulsing} src={sportTriviaIcon} />
-                        </SPAAnchor> */}
+                        {location.pathname !== ROUTES.MintWorldCupNFT && <MintVoucher />}
                         <WalletInfo />
-                        <ProfileItem />
-                        <MenuIcon onClick={() => setNavMenuVisibility(true)} />
-                        {/* {navMenuVisibility && ( */}
+                        {isWalletConnected && <ProfileItem />}
+                        <MenuIcon
+                            onClick={() => setNavMenuVisibility(true)}
+                            data-matomo-category="dapp-header"
+                            data-matomo-action="menu-icon"
+                        />
                         <NavMenu
                             visibility={navMenuVisibility}
-                            hideVisibilityFunction={(value: boolean | null) => setNavMenuVisibility(value)}
+                            setNavMenuVisibility={(value: boolean | null) => setNavMenuVisibility(value)}
                         />
-                        {/* )} */}
                     </RightContainer>
                 </Container>
             )}
             {isMobile && (
-                <WrapperMobile>
-                    <LogoContainer>
-                        <Logo />
-                    </LogoContainer>
-                    <MenuIconContainer>
-                        <MenuIcon onClick={() => setNavMenuVisibility(true)} />
-                        <NavMenu
-                            visibility={navMenuVisibility}
-                            hideVisibilityFunction={() => setNavMenuVisibility(false)}
+                <>
+                    <WrapperMobile>
+                        <LogoContainer>
+                            <Logo />
+                        </LogoContainer>
+                        <SearchIconContainer>
+                            <IconWrapper>
+                                <SearchIcon onClick={() => setShowSearchModal(true)} />
+                            </IconWrapper>
+                            <ReactModal
+                                isOpen={showSearcHModal}
+                                onRequestClose={() => {
+                                    setShowSearchModal(false);
+                                }}
+                                shouldCloseOnOverlayClick={true}
+                                style={customModalStyles}
+                            >
+                                <SearchContainer>
+                                    <Search
+                                        text={marketSearch}
+                                        handleChange={(value) => {
+                                            dispatch(setMarketSearch(value));
+                                        }}
+                                    />
+                                </SearchContainer>
+                            </ReactModal>
+                        </SearchIconContainer>
+                        <MenuIconContainer>
+                            <MenuIcon onClick={() => setNavMenuVisibility(true)} />
+                            {claimablePositionCount && (
+                                <NotificationCount>
+                                    <Count>{claimablePositionCount}</Count>
+                                </NotificationCount>
+                            )}
+                            <NavMenuMobile
+                                visibility={navMenuVisibility}
+                                setNavMenuVisibility={(value: boolean | null) => setNavMenuVisibility(value)}
+                            />
+                        </MenuIconContainer>
+                    </WrapperMobile>
+                    {location.pathname !== ROUTES.MintWorldCupNFT && (
+                        <MintVoucher
+                            buttonStyle={{ padding: '7px', background: '#303656' }}
+                            style={{ marginTop: '10px' }}
                         />
-                    </MenuIconContainer>
-                </WrapperMobile>
+                    )}
+                </>
             )}
         </>
     );
@@ -134,21 +189,11 @@ const RightContainer = styled(FlexDivRowCentered)`
     }
 `;
 
-// const StyledSportTriviaIcon = styled.img<{ stopPulsing: boolean }>`
-//     margin: 0 20px;
-//     cursor: pointer;
-//     height: 36px;
-//     margin-bottom: -4px;
-//     @media (max-width: 767px) {
-//         margin-bottom: 5px;
-//         margin-right: 0px;
-//     }
-//     animation: ${(props) => (props.stopPulsing ? 'none' : 'pulsing 1s ease-in')};
-//     animation-iteration-count: 10;
-// `;
-
 const MenuIcon = styled.img.attrs({ src: burger })`
     cursor: pointer;
+    height: 25px;
+    width: 35px;
+    filter: invert(39%) sepia(9%) saturate(1318%) hue-rotate(199deg) brightness(71%) contrast(88%);
 `;
 
 const WrapperMobile = styled(FlexDivRow)`
@@ -157,12 +202,21 @@ const WrapperMobile = styled(FlexDivRow)`
     justify-content: center;
 `;
 
-const MenuIconContainer = styled.div`
-    width: 100%;
+const SearchIconContainer = styled.div`
+    width: 50%;
     display: flex;
     justify-content: end;
     position: absolute;
     right: 12px;
+`;
+
+const MenuIconContainer = styled.div`
+    width: 50%;
+    display: flex;
+    justify-content: start;
+    position: absolute;
+    left: 12px;
+    margin-top: 10px;
 `;
 
 const LogoContainer = styled.div`
@@ -171,48 +225,54 @@ const LogoContainer = styled.div`
     justify-content: center;
 `;
 
-const StyledButton = styled.button<{ disabled?: boolean }>`
-    background: ${(props) => props.theme.button.background.secondary};
-    border: 2px solid #04cfb6;
-    color: #04cfb6;
-    border-radius: 5px;
-    padding: 0 60px 0 75px;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12.5px;
-    text-align: center;
-    outline: none;
-    text-transform: none;
+const IconWrapper = styled.div`
+    border-radius: 30px;
+    background: ${(props) => props.theme.background.tertiary};
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    top: -10px;
+`;
+
+const SearchIcon = styled.i`
+    font-size: 40px;
     cursor: pointer;
-    min-height: 28px;
-    width: fit-content;
-    white-space: nowrap;
-    position: relative;
-    opacity: ${(props) => (props.disabled ? '0.4' : '1')};
-    &:hover {
-        cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
-        opacity: ${(props) => (props.disabled ? '0.4' : '0.8')};
+    margin-bottom: 3px;
+    position: absolute;
+    top: -7px;
+    left: -6px;
+    &:before {
+        font-family: ExoticIcons !important;
+        content: '\\0042';
+        color: ${(props) => props.theme.background.primary};
     }
 `;
 
-const LeftBallStyled = styled(LeftBall)`
-    position: absolute;
-    top: -6px;
-    left: 27px;
+const SearchContainer = styled.div`
+    background: ${(props) => props.theme.background.secondary};
+    height: 100%;
+    text-align: center;
 `;
 
-const RightBallStyled = styled(RightBall)`
+const NotificationCount = styled.div`
     position: absolute;
-    top: -6px;
-    right: 10px;
+    border-radius: 50%;
+    bottom: -8px;
+    left: 24px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    height: 16px;
+    width: 16px;
+    background-color: ${MAIN_COLORS.BACKGROUNDS.BLUE};
+    box-shadow: ${MAIN_COLORS.SHADOWS.NOTIFICATION};
 `;
 
-const StyledQatarMascot = styled(QatarMascot)`
-    position: absolute;
-    left: -10px;
-    top: -20px;
-    width: 44px;
-    height: auto;
+const Count = styled.span`
+    color: ${MAIN_COLORS.DARK_GRAY};
+    font-weight: 800;
+    font-size: 12px;
 `;
 
 export default DappHeader;

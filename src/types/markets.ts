@@ -41,6 +41,7 @@ export type MarketInfo = {
 export type SportMarketInfo = {
     id: string;
     address: string;
+    gameId: string;
     maturityDate: Date;
     tags: number[];
     isOpen: boolean;
@@ -134,6 +135,8 @@ export type ParlayMarket = {
     won: boolean;
 };
 
+export type ParlayMarketWithRank = ParlayMarket & { rank: number };
+
 export type PositionData = {
     id: string;
     market: SportMarketInfo;
@@ -151,14 +154,6 @@ export type AccountMarketData = {
     winningAmount: number;
     canWithdraw: boolean;
     userAlreadyClaimedAmount: number;
-};
-
-export type AccountMarketTicketData = AccountMarketData & {
-    position: number;
-};
-
-export type AccountMarketOpenBidData = AccountMarketData & {
-    userPositions: number[];
 };
 
 export type SortOptionType = {
@@ -221,6 +216,7 @@ export type PositionBalance = {
     account: string;
     amount: number;
     position: AccountPositionGraph;
+    sUSDPaid: number;
 };
 
 export type AccountPosition = AccountPositionGraph & {
@@ -302,6 +298,7 @@ export type ParlaysMarketPosition = {
 
 export type ParlaysMarket = SportMarketInfo & {
     position: Position;
+    winning?: boolean;
 };
 
 export type ParlayAmmData = {
@@ -317,4 +314,9 @@ export type ParlayPayment = {
     selectedStableIndex: COLLATERALS_INDEX;
     isVoucherSelected: boolean | undefined;
     amountToBuy: number | string;
+};
+
+export type WinningInfo = {
+    highestWin: number;
+    lifetimeWins: number;
 };

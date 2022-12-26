@@ -4,6 +4,7 @@ import { ParlayMarket } from 'types/markets';
 import { NetworkId } from 'types/network';
 import thalesData from 'thales-data';
 import { fixApexName, fixDuplicatedTeamName, fixLongTeamNameString } from 'utils/formatters/string';
+import { updateTotalQuoteAndAmountFromContract } from 'utils/markets';
 
 export const useParlayMarketsQuery = (
     account: string,
@@ -40,13 +41,16 @@ export const useParlayMarketsQuery = (
                         }),
                     };
                 });
-                return parlayMarketsModified;
+
+                const updateParlayWithContractData = updateTotalQuoteAndAmountFromContract(parlayMarketsModified);
+                return updateParlayWithContractData;
             } catch (e) {
                 console.log('E ', e);
                 return undefined;
             }
         },
         {
+            refetchInterval: 5000,
             ...options,
         }
     );

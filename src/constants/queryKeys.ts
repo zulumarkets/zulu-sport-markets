@@ -6,7 +6,9 @@ export const QUERY_KEYS = {
     Rewards: (networkId: NetworkId, period: number) => ['rewards', networkId, period],
     Markets: (networkId: NetworkId) => ['markets', networkId],
     ParlayMarkets: (networkId: NetworkId, account: string) => ['parlayMarkets', networkId, account],
+    ParlayLeaderboard: (networkId: NetworkId) => ['parlayLeaderboard', networkId],
     SportMarkets: (networkId: NetworkId) => ['sportMarkets', networkId],
+    SportMarketsNew: (networkId: NetworkId) => ['sportMarketsNew', networkId],
     ParlayAmmData: (networkId: NetworkId) => ['parlayAmmData', networkId],
     OpenSportMarkets: (networkId: NetworkId) => ['openSportMarkets', networkId],
     CanceledSportMarkets: (networkId: NetworkId) => ['canceledSportMarkets', networkId],
@@ -28,18 +30,21 @@ export const QUERY_KEYS = {
         balances,
     ],
     AvailablePerSide: (marketAddress: string, side: Side) => ['availablePerSide', marketAddress, side],
-    MarketTransactions: (marketAddress: string, networkId: NetworkId) => [
+    MarketTransactions: (marketAddress: string, networkId: NetworkId, walletAddress?: string) => [
         'market',
         'transactions',
         marketAddress,
         networkId,
+        walletAddress,
     ],
+    MarketDuration: (networkId: NetworkId) => ['marketDuration', networkId],
     UserTransactions: (walletAddress: string, networkId: NetworkId) => [
         'user',
         'transactions',
         walletAddress,
         networkId,
     ],
+    WinningInfo: (walletAddress: string, networkId: NetworkId) => ['user', 'winningInfo', walletAddress, networkId],
     ClaimTx: (market: string, networkId: NetworkId) => ['claim', 'transactions', market, networkId],
     ClaimableCount: (walletAddress: string, networkId: NetworkId) => [
         'claimable',
@@ -55,19 +60,6 @@ export const QUERY_KEYS = {
         walletAddress,
         marketAddress,
         networkId,
-    ],
-    AccountMarketData: (marketAddress: string, walletAddress: string) => ['market', marketAddress, walletAddress],
-    AccountMarketTicketData: (marketAddress: string, walletAddress: string) => [
-        'market',
-        'ticket',
-        marketAddress,
-        walletAddress,
-    ],
-    AccountMarketOpenBidData: (marketAddress: string, walletAddress: string) => [
-        'market',
-        'openBid',
-        marketAddress,
-        walletAddress,
     ],
     MarketsParameters: (networkId: NetworkId) => ['markets', 'parameters', networkId],
     Tags: (networkId: NetworkId) => ['tags', networkId],
@@ -127,7 +119,23 @@ export const QUERY_KEYS = {
         Tweet: () => ['quiz', 'tweet'],
     },
     FavoriteTeam: (walletAddress: string, networkId: NetworkId) => ['favoriteTeam', walletAddress, networkId],
-    Zebro: (walletAddress: string, networkId: NetworkId) => ['zebro', walletAddress, networkId],
+    Zebro: (networkId: NetworkId) => ['zebro', networkId],
+    Vault: {
+        Data: (vaultAddress: string, networkId: NetworkId) => [vaultAddress, 'data', networkId],
+        UserData: (vaultAddress: string, walletAddress: string, networkId: NetworkId) => [
+            vaultAddress,
+            'data',
+            walletAddress,
+            networkId,
+        ],
+        AllVaultsUserData: (walletAddress: string, networkId: NetworkId) => ['data', walletAddress, networkId],
+        Trades: (vaultAddress: string, networkId: NetworkId) => [vaultAddress, 'trades', networkId],
+        PnL: (vaultAddress: string, networkId: NetworkId) => [vaultAddress, 'pnl', networkId],
+        UserTransactions: (vaultAddress: string, networkId: NetworkId) => [vaultAddress, 'userTransactions', networkId],
+    },
+    Bungee: {
+        Tokens: () => ['bungee', 'tokens'],
+    },
 };
 
 export default QUERY_KEYS;
