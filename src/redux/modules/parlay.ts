@@ -8,7 +8,7 @@ import { RootState } from '../rootReducer';
 
 const sliceName = 'parlay';
 
-const DEFAULT_MAX_NUMBER_OF_MATCHES = 4;
+const DEFAULT_MAX_NUMBER_OF_MATCHES = 6;
 
 const getDefaultParlay = (): ParlaysMarketPosition[] => {
     const lsParlay = localStore.get(LOCAL_STORAGE_KEYS.PARLAY);
@@ -46,7 +46,7 @@ export const parlaySlice = createSlice({
     initialState,
     reducers: {
         updateParlay: (state, action: PayloadAction<ParlaysMarketPosition>) => {
-            const index = state.parlay.findIndex((el) => el.sportMarketId === action.payload.sportMarketId);
+            const index = state.parlay.findIndex((el) => el.parentMarket === action.payload.parentMarket);
             if (index === -1) {
                 // ADD new market
                 if (state.parlay.length < state.parlaySize) {
@@ -69,6 +69,7 @@ export const parlaySlice = createSlice({
             } else {
                 // UPDATE market position
                 const parlayCopy = [...state.parlay];
+                parlayCopy[index].sportMarketAddress = action.payload.sportMarketAddress;
                 parlayCopy[index].position = action.payload.position;
                 state.parlay = [...parlayCopy];
             }
@@ -79,7 +80,7 @@ export const parlaySlice = createSlice({
             state.parlaySize = action.payload;
         },
         removeFromParlay: (state, action: PayloadAction<string>) => {
-            state.parlay = state.parlay.filter((market) => market.sportMarketId !== action.payload);
+            state.parlay = state.parlay.filter((market) => market.sportMarketAddress !== action.payload);
             if (state.parlay.length === 0) {
                 state.payment.amountToBuy = getDefaultPayment().amountToBuy;
             }

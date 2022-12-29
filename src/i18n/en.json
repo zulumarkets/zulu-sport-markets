@@ -315,7 +315,40 @@
             "coming-soon": "Coming soon",
             "vs": "VS",
             "draw": "Draw",
-            "paused": "Paused"
+            "paused": "Paused",
+            "pending": "Pending",
+            "no-liquidity": "No liquidity",
+            "bet-type": {
+                "winner": "Winner",
+                "spread": "Handicap",
+                "total": "Total",
+                "double-chance": "Double chance"
+            },
+            "odd-tooltip": {
+                "scoring": {
+                    "goals": "goals",
+                    "points": "points"
+                },
+                "match-resolve": {
+                    "regular": "in regular time",
+                    "overtime": "including possible overtime"
+                },
+                "winner": "{{team}} will win the match {{matchResolve}}.",
+                "draw": "The match will end in a draw {{matchResolve}}.",
+                "total": {
+                    "over": "The total number of {{scoring}} in the match {{matchResolve}} will be more than {{total}}.",
+                    "under": "The total number of {{scoring}} in the match {{matchResolve}} will be less than {{total}}."
+                },
+                "spread": {
+                    "minus": "{{team}} will win the match with a difference of more than {{spread}} {{scoring}} {{matchResolve}}.",
+                    "plus": "{{team}} will win the match or lose by less than {{spread}} {{scoring}} {{matchResolve}}."
+                },
+                "double-chance": {
+                    "1x2": "{{team}} will win the match or the match will end in a draw {{matchResolve}}.",
+                    "12": "{{team}} or {{team2}} will win the match {{matchResolve}}."
+                },
+                "bonus": "{{bonus}} added bonus on win!"
+            }
         },
         "market-details": {
             "price": "Price",
@@ -358,6 +391,7 @@
         },
         "parlay": {
             "total-quote": "Total quote",
+            "total-bonus": "Total bonus",
             "clear": "Clear all",
             "buy-in": "Buy-in",
             "parlay-fee": "Parlay fee",
@@ -745,6 +779,31 @@
         "info": "If multiple parlays have the same quote the following will be used as tie-breakers in respective order:",
         "info1": "- Number of positions on the parlay",
         "info2": "- The amount paid",
-        "info3": "- Actual total quote (gotten by multiplying positions individually)"
+        "info3": "- Actual total quote (gotten by multiplying positions individually)",
+        "sidebar": {
+            "title-parlay": "Parlay",
+            "title-leaderboard": "Leaderboard",
+            "wallet": "Wallet",
+            "quote": "Quote",
+            "paid": "Paid",
+            "won": "Won",
+            "reward": "Reward",
+            "total-quote": "Total Quote",
+            "total-amount": "Total Amount"
+        },
+        "periods": {
+            "period-0": "December",
+            "period-1": "January",
+            "period-2": "February",
+            "period-3": "March",
+            "period-4": "April",
+            "period-5": "May",
+            "period-6": "June",
+            "period-7": "July",
+            "period-8": "August",
+            "period-9": "September",
+            "period-10": "October",
+            "period-11": "November"
+        }
     }
 }

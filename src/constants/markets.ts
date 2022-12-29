@@ -5,10 +5,6 @@ export enum GlobalFiltersEnum {
     PendingMarkets = 'PendingMarkets',
     ResolvedMarkets = 'ResolvedMarkets',
     Canceled = 'Canceled',
-    All = 'AllMarkets',
-    YourPositions = 'YourPositions',
-    Claim = 'Claim',
-    History = 'History',
 }
 
 export enum SortDirection {
@@ -113,3 +109,8 @@ export const OP_INCENTIVIZED_LEAGUE = {
     startDate: new Date(Date.UTC(2022, 11, 22, 0, 0, 0)),
     endDate: new Date(Date.UTC(2023, 0, 6, 0, 0, 0)),
 };
+
+export const MIN_LIQUIDITY = 10;
+
+export const PARLAY_LEADERBOARD_START_DATE = new Date(Date.UTC(2022, 11, 1, 0, 0, 0));
+export const PARLAY_LEADERBOARD_MINIMUM_GAMES = 2;

@@ -9,7 +9,6 @@ import { buildHref } from 'utils/routes';
 import Table from 'components/Table';
 import { CellProps } from 'react-table';
 import { truncateAddress } from 'utils/formatters/string';
-import { MarketContainer } from 'pages/Markets/Market/MarketDetails/styled-components/MarketDetails';
 import {
     AddressLink,
     BoldText,
@@ -24,6 +23,7 @@ import {
     TotalPnl,
     TipLink,
     ColumnValue,
+    MarketContainer,
 } from './styled-components';
 import useRewardsDataQuery from 'queries/rewards/useRewardsDataQuery';
 import { getNetworkId, getWalletAddress } from 'redux/modules/wallet';
@@ -147,7 +147,6 @@ const Rewards: React.FC = () => {
                             text={searchText}
                             customPlaceholder={t('rewards.search-placeholder')}
                             handleChange={(e) => setSearchText(e)}
-                            customStyle={{ border: '1px solid #1A1C2B' }}
                             width={300}
                         />
                         <Row>
