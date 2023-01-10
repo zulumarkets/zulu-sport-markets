@@ -400,6 +400,10 @@
             "buttons": {
                 "disconnect": "Отключить",
                 "switch": "Выключатель"
+            },
+            "labels": {
+                "language": "Язык",
+                "get-started": "Начать"
             }
         },
         "op-incentivized-tooltip": "Рынки EPL стимулируются 5000 OP с 26 декабря по 6 января в зависимости от пропорционального объема. Ознакомьтесь с таблицей лидеров <duneLink>здесь</ duneLink>.",
@@ -750,14 +754,13 @@
     },
     "parlay-leaderboard": {
         "title": "Таблица поощрений Parlay",
-        "description": "В общей сложности 10 000 OP будут распределены по лучшим экспрессам месяца. Билеты будут ранжированы на основе самых высоких коэффициентов, за которыми следует объем в случае ничьей.",
-        "distribution-note": "Награды будут распределены между 20 лучшими пари за декабрь!",
-        "info1": "- Количество позиций в экспрессе",
-        "info": "Если несколько экспрессов имеют одну и ту же котировку, следующие будут использоваться в качестве тай-брейков в соответствующем порядке:",
-        "no-parlays": "За этот период еще не зарегистрировано ни одного выигрышного экспресса.",
-        "warning": "*Команда Overtime имеет право дисквалифицировать кошельки, которые мы подозреваем в использовании системы.",
-        "info3": "- Фактическая общая котировка (полученная путем умножения позиций по отдельности)",
-        "info2": "- Выплаченная сумма",
+        "description": "A total of 10,000 OP will be distributed to the best parlays of the month. The tickets will be ranked based on the number of positions on the parlays, followed by total quote.",
+        "distribution-note": "Rewards will be distributed to the top 20 parlays for the month!",
+        "no-parlays": "No winning parlays registered in the period yet.",
+        "warning": "*Overtime team holds the right to disqualify wallets we suspect of gaming the system.",
+        "info": "If multiple parlays have the same number of positions and total quote the following will be used as tie-breakers in respective order:",
+        "info1": "- The amount paid",
+        "info2": "- Actual total quote (gotten by multiplying positions individually)",
         "sidebar": {
             "total-amount": "Общее количество",
             "player": "Игрок",
@@ -768,7 +771,22 @@
             "title-leaderboard": "Таблица лидеров",
             "title-parlay": "экспресс",
             "wallet": "Бумажник",
-            "reward": "Вознаграждение"
+            "reward": "Вознаграждение",
+            "positions": "Позиции"
+        },
+        "periods": {
+            "period-5": "Может",
+            "period-8": "Август",
+            "period-10": "Октябрь",
+            "period-0": "Декабрь",
+            "period-1": "январь",
+            "period-7": "Июль",
+            "period-11": "ноябрь",
+            "period-3": "Маршировать",
+            "period-6": "Июнь",
+            "period-9": "Сентябрь",
+            "period-4": "апреля",
+            "period-2": "февраль"
         }
     },
     "wizard": {

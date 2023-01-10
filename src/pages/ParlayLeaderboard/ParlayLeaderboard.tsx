@@ -72,8 +72,8 @@ const ParlayLeaderboard: React.FC = () => {
 
     for (let index = 0; index <= latestPeriod; index++) {
         const periodDate = addMonths(PARLAY_LEADERBOARD_START_DATE, index);
-        const periodYear = periodDate.getUTCFullYear();
-        const periodMonth = periodDate.getUTCMonth() + 1;
+        const periodYear = periodDate.getFullYear();
+        const periodMonth = periodDate.getMonth() + 1;
         monthOptions.push({
             value: index,
             label: `${t(`parlay-leaderboard.periods.period-${periodMonth % 12}`)} ${periodYear}`,
@@ -82,7 +82,7 @@ const ParlayLeaderboard: React.FC = () => {
 
     const [month, setMonth] = useState<number>(latestPeriod);
 
-    const parlayLeaderboardQuery = useParlayLeaderboardQuery(networkId, month, { enabled: isAppReady });
+    const parlayLeaderboardQuery = useParlayLeaderboardQuery(networkId, month + 1, { enabled: isAppReady });
 
     const parlays = useMemo(() => {
         return parlayLeaderboardQuery.isSuccess && parlayLeaderboardQuery.data ? parlayLeaderboardQuery.data : [];
@@ -155,7 +155,6 @@ const ParlayLeaderboard: React.FC = () => {
                 <ul style={{ paddingLeft: 10 }}>
                     <Description>{t('parlay-leaderboard.info1')}</Description>
                     <Description>{t('parlay-leaderboard.info2')}</Description>
-                    <Description>{t('parlay-leaderboard.info3')}</Description>
                 </ul>
                 <Warning>{t('parlay-leaderboard.warning')}</Warning>
                 <LeaderboardHeader>
@@ -220,13 +219,21 @@ const ParlayLeaderboard: React.FC = () => {
                         ),
                     },
                     {
+                        accessor: 'numberOfPositions',
+                        Header: <>{t('parlay-leaderboard.sidebar.positions')}</>,
+                        Cell: (cellProps: CellProps<ParlayMarketWithRank, ParlayMarketWithRank['sportMarkets']>) => (
+                            <TableText>{cellProps.cell.value}</TableText>
+                        ),
+                        sortable: true,
+                    },
+                    {
                         accessor: 'totalQuote',
                         Header: <>{t('parlay-leaderboard.sidebar.quote')}</>,
                         Cell: (cellProps: CellProps<ParlayMarketWithRank, ParlayMarketWithRank['totalQuote']>) => (
                             <TableText>{formatMarketOdds(selectedOddsType, cellProps.cell.value)}</TableText>
                         ),
                         sortable: true,
-                        sortType: quoteSort(),
+                        sortType: quoteSort(selectedOddsType),
                     },
                     {
                         accessor: 'sUSDPaid',
@@ -499,8 +506,10 @@ const TableText = styled.p`
     }
 `;
 
-const quoteSort = () => (rowA: any, rowB: any) => {
-    return rowA.original.totalQuote - rowB.original.totalQuote;
+const quoteSort = (oddsType: OddsType) => (rowA: any, rowB: any) => {
+    return oddsType === OddsType.AMM
+        ? rowA.original.totalQuote - rowB.original.totalQuote
+        : rowB.original.totalQuote - rowA.original.totalQuote;
 };
 
 export const StatusIcon = styled.i`
