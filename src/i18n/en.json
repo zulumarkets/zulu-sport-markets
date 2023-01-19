@@ -16,6 +16,11 @@
             "page": "Page",
             "rows-per-page": "Rows per page:"
         },
+        "filter": {
+            "date": {
+                "choose": "Choose date"
+            }
+        },
         "wallet": {
             "connect-your-wallet": "Connect wallet",
             "switch-wallet": "Switch wallet",
@@ -186,7 +191,7 @@
                 "allmarkets": "All",
                 "openmarkets": "All",
                 "resolvedmarkets": "Finished",
-                "pendingmarkets": "Pending",
+                "pendingmarkets": "Ongoing",
                 "yourpositions": "Your positions",
                 "claim": "Claimable",
                 "history": "Your transactions",
@@ -305,6 +310,7 @@
     "markets": {
         "market-card": {
             "starts": "starts",
+            "starts-in": "Starts in",
             "claimable": "Claimable",
             "finished": "Finished",
             "result": "Result",
@@ -344,8 +350,8 @@
                     "plus": "{{team}} will win the match or lose by less than {{spread}} {{scoring}} {{matchResolve}}."
                 },
                 "double-chance": {
-                    "1x2": "{{team}} will win the match or the match will end in a draw {{matchResolve}}.",
-                    "12": "{{team}} or {{team2}} will win the match {{matchResolve}}."
+                    "12": "{{team}} or {{team2}} will win the match {{matchResolve}}.",
+                    "1x2": "{{team}} will win the match or the match will end in a draw {{matchResolve}}."
                 },
                 "bonus": "{{bonus}} added bonus on win!"
             }
@@ -446,7 +452,7 @@
         },
         "zero-odds-tooltip": "Sports AMM only offers liquidity in the price range of $0.05 to $0.95. Effectively this means that if the odds for a position are less than 5% or more than 95%, that position wont have liquidity.",
         "discounted-per": "Discounted as per",
-        "op-incentivized-tooltip": "EPL markets are incentivized with 5,000 OP from Dec 26th games to Jan 6th games based on pro-rata volume. Check out the leaderboard <duneLink>here</ duneLink>.",
+        "op-incentivized-tooltip": "NFL markets are incentivized with 10,000 OP from Jan 14th games to Feb 12th games based on pro-rata volume. Check out the leaderboard <duneLink>here</ duneLink>.",
         "incentivized-markets": "INCENTIVIZED MARKETS"
     },
     "rewards": {
@@ -468,7 +474,8 @@
             "no-data-available": "No data available",
             "volume": "Volume",
             "safebox": "SafeBox fees",
-            "rebates": "Rebates"
+            "rebates": "Rebates",
+            "rank": "Rank"
         },
         "periods": {
             "period-0": "First period",
@@ -479,7 +486,7 @@
             "period-5": "Sixth period",
             "period-6": "Seventh period",
             "period-7": "Eighth period",
-            "period-8": "Nineth period",
+            "period-8": "Ninth period",
             "period-9": "Tenth period"
         }
     },

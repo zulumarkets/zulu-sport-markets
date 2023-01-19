@@ -118,13 +118,18 @@
         "guidelines": "guias",
         "built-on": "Desarrollado sobre",
         "odds": {
-            "american-odds": "Odds americanas",
+            "american-odds": "Odds USA",
             "decimal-odds": "Probabilidades decimales",
             "normalized-implied-odds": "Odds implícitas normalizadas"
         },
         "pagination": {
             "page": "Página",
             "rows-per-page": "Filas por página:"
+        },
+        "filter": {
+            "date": {
+                "choose": "Choose date"
+            }
         },
         "coming-soon": "Pronto!",
         "h2h-tooltip": "This is a head-to-head market. The winner will be the driver who finished on a better place in the main race.",
@@ -187,11 +192,11 @@
                 "history": "Tus transacciones",
                 "archivedmarkets": "Mercados archivados",
                 "tooltip": "Mercados resueltos hace más de 7 días",
-                "pendingmarkets": "Pendiente",
                 "openmarkets": "Todos",
                 "resolvedmarkets": "Acabado",
                 "allmarkets": "Todos",
-                "canceled": "En pausa / Cancelado"
+                "canceled": "En pausa / Cancelado",
+                "pendingmarkets": "En curso"
             },
             "sport": {
                 "all": "Todos los deportes",
@@ -302,7 +307,8 @@
                     "1x2": "{{team}} will win the match or the match will end in a draw {{matchResolve}}."
                 },
                 "bonus": "{{bonus}} added bonus on win!"
-            }
+            },
+            "starts-in": "Empieza en"
         },
         "market-details": {
             "price": "Precio",
@@ -423,7 +429,8 @@
             "volume": "Volumen",
             "rebates": "Reembolsos",
             "safebox": "Tarifas de SafeBox",
-            "percent": "Por ciento"
+            "percent": "Por ciento",
+            "rank": "Rank"
         },
         "periods": {
             "period-0": "Primer periodo",
