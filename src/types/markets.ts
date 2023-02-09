@@ -344,6 +344,11 @@ export type ParlayPayment = {
 export type WinningInfo = {
     highestWin: number;
     lifetimeWins: number;
+    totalWins: number;
+};
+
+export type LosingInfo = {
+    totalLoss: number;
 };
 
 export type SportMarketLiveResult = {

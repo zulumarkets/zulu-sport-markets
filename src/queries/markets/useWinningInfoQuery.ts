@@ -2,7 +2,7 @@ import { Position } from 'constants/options';
 import QUERY_KEYS from 'constants/queryKeys';
 import { useQuery, UseQueryOptions } from 'react-query';
 import thalesData from 'thales-data';
-import { MarketTransaction, ParlayMarket, WinningInfo } from 'types/markets';
+import { ClaimTransaction, MarketTransaction, ParlayMarket, WinningInfo } from 'types/markets';
 import { NetworkId } from 'types/network';
 import {
     convertFinalResultToResultType,
@@ -12,6 +12,8 @@ import {
 } from 'utils/markets';
 
 const useWinningInfoQuery = (walletAddress: string, networkId: NetworkId, options?: UseQueryOptions<WinningInfo>) => {
+    const KEEPER_BOT_CALLER_ADDRESS = '0x3292e6583dfa145fc25cfe3a74d8f66846683633';
+
     return useQuery<WinningInfo>(
         QUERY_KEYS.WinningInfo(walletAddress, networkId),
         async () => {
@@ -39,6 +41,37 @@ const useWinningInfoQuery = (walletAddress: string, networkId: NetworkId, option
                     )
                     .map((tx: MarketTransaction) => tx.amount);
 
+                const allSinglesSoldAmounts = marketTransactions
+                    .filter((tx: any) => tx.type === 'sell')
+                    .map((tx: MarketTransaction) => tx.paid);
+
+                const allCanceledBuyMarkets = marketTransactions
+                    .filter((tx: any) => tx.type === 'buy' && tx.wholeMarket.isCanceled)
+                    .map((tx: MarketTransaction) => tx.wholeMarket.address);
+
+                let allCanceledWinningAmounts: number[] = [];
+                for (let i = 0; i < allCanceledBuyMarkets.length; i++) {
+                    const [claimTransactions, childClaimTransactions] = await Promise.all([
+                        thalesData.sportMarkets.claimTxes({
+                            market: allCanceledBuyMarkets[i],
+                            network: networkId,
+                            account: walletAddress,
+                        }),
+                        thalesData.sportMarkets.claimTxes({
+                            parentMarket: allCanceledBuyMarkets[i],
+                            network: networkId,
+                            account: walletAddress,
+                        }),
+                    ]);
+
+                    // Filter keeper bot transactions
+                    const claimedAmounts = [...claimTransactions, ...childClaimTransactions]
+                        .filter((tx: ClaimTransaction) => tx?.caller?.toLowerCase() !== KEEPER_BOT_CALLER_ADDRESS)
+                        .map((tx: ClaimTransaction) => tx.amount);
+
+                    allCanceledWinningAmounts = [...claimedAmounts];
+                }
+
                 const highestWinningSingle =
                     allSinglesWinningAmounts.length > 0 ? Math.max(...allSinglesWinningAmounts) : 0;
 
@@ -52,13 +85,20 @@ const useWinningInfoQuery = (walletAddress: string, networkId: NetworkId, option
                 const highestWin =
                     highestWinningSingle > highestWinningParlay ? highestWinningSingle : highestWinningParlay;
 
+                const totalWins: number =
+                    allSinglesWinningAmounts.reduce((acc: number, val: number) => acc + val, 0) +
+                    allSinglesSoldAmounts.reduce((acc: number, val: number) => acc + val, 0) +
+                    allCanceledWinningAmounts.reduce((acc: number, val: number) => acc + val, 0) +
+                    allParlaysWinningAmounts.reduce((acc: number, val: number) => acc + val, 0);
+
                 return {
-                    highestWin: highestWin,
+                    highestWin,
                     lifetimeWins: allSinglesWinningAmounts.length + allParlaysWinningAmounts.length,
+                    totalWins,
                 };
             } catch (e) {
                 console.log(e);
-                return { highestWin: 0, lifetimeWins: 0 };
+                return { highestWin: 0, lifetimeWins: 0, totalWins: 0 };
             }
         },
         {

@@ -36,6 +36,7 @@ export const QUERY_KEYS = {
         networkId,
     ],
     WinningInfo: (walletAddress: string, networkId: NetworkId) => ['user', 'winningInfo', walletAddress, networkId],
+    LosingInfo: (walletAddress: string, networkId: NetworkId) => ['user', 'losingInfo', walletAddress, networkId],
     ClaimTx: (market: string, networkId: NetworkId) => ['claim', 'transactions', market, networkId],
     ClaimableCount: (walletAddress: string, networkId: NetworkId) => [
         'claimable',

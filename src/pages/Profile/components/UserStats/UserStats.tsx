@@ -1,3 +1,4 @@
+import useLosingInfoQuery from 'queries/markets/useLosingInfoQuery';
 import useWinningInfoQuery from 'queries/markets/useWinningInfoQuery';
 import useUserVaultsDataQuery from 'queries/vault/useUserVaultsDataQuery';
 import useUsersStatsQuery from 'queries/wallet/useUsersStatsQuery';
@@ -7,10 +8,10 @@ import { useSelector } from 'react-redux';
 import { getIsWalletConnected, getNetworkId, getWalletAddress } from 'redux/modules/wallet';
 import { RootState } from 'redux/rootReducer';
 import styled from 'styled-components';
-import { WinningInfo } from 'types/markets';
+import { LosingInfo, WinningInfo } from 'types/markets';
 import { UserVaultsData } from 'types/vault';
 
-const UserStats: React.FC<{ openPositionsValue: number }> = ({ openPositionsValue }) => {
+const UserStats: React.FC = () => {
     const { t } = useTranslation();
     const walletAddress = useSelector((state: RootState) => getWalletAddress(state)) || '';
     const isWalletConnected = useSelector((state: RootState) => getIsWalletConnected(state));
@@ -22,7 +23,12 @@ const UserStats: React.FC<{ openPositionsValue: number }> = ({ openPositionsValu
     });
     const winningInfo = winningInfoQuery.isSuccess
         ? (winningInfoQuery.data as WinningInfo)
-        : { highestWin: 0, lifetimeWins: 0 };
+        : { highestWin: 0, lifetimeWins: 0, totalWins: 0 };
+
+    const losingInfoQuery = useLosingInfoQuery(walletAddress.toLowerCase(), networkId, {
+        enabled: isWalletConnected,
+    });
+    const losingInfo = losingInfoQuery.isSuccess ? (losingInfoQuery.data as LosingInfo) : { totalLoss: 0 };
 
     const userVaultsDataQuery = useUserVaultsDataQuery(walletAddress.toLowerCase(), networkId, {
         enabled: isWalletConnected,
@@ -31,7 +37,7 @@ const UserStats: React.FC<{ openPositionsValue: number }> = ({ openPositionsValu
     const vaultsData = userVaultsDataQuery.isSuccess
         ? (userVaultsDataQuery.data as UserVaultsData)
         : { balanceTotal: 0 };
-
+    console.log(user.pnl);
     return (
         <Wrapper>
             <SectionWrapper>
@@ -65,7 +71,7 @@ const UserStats: React.FC<{ openPositionsValue: number }> = ({ openPositionsValu
                 <Separator />
                 <Section>
                     <Label>P&L</Label>
-                    <Value>{!user ? 0 : (user.pnl + openPositionsValue).toFixed(2)}</Value>
+                    <Value>{!user ? 0 : (winningInfo.totalWins - losingInfo.totalLoss).toFixed(2)}</Value>
                     <CurrencyLabel>USD</CurrencyLabel>
                 </Section>
             </SectionWrapper>
