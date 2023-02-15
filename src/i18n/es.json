@@ -20,10 +20,7 @@
             "get-usd": "Obtener {{amount}}",
             "approve": "Aprobar",
             "get-usd-progress": "Obteniendo {{amount}}...",
-            "disclaimer": "Al conectar tu billetera reconoce el haber leido y entendido el <a target=\"_blank\" href={{link}}>disclaimer</a> de Overtime Markets, aceptando sus condiciones de uso.",
-            "disclaimer1": "Al conectar una billetera, reconoce que ha leído y comprende los Mercados de tiempo extra",
-            "disclaimer2": "y aceptar sus condiciones de uso.",
-            "disclaimer-lowercase": "Descargo de responsabilidad",
+            "disclaimer": "By connecting a wallet you acknowledge that you have read and understand the Overtime Markets <disclaimer>disclaimer</disclaimer> and agree to its <terms>Terms of Use</terms>.",
             "wallet-info": "Información de la billetera"
         },
         "voucher": {
@@ -300,7 +297,7 @@
                 },
                 "spread": {
                     "minus": "{{team}} will win the match with a difference of more than {{spread}} {{scoring}} {{matchResolve}}.",
-                    "plus": "{{team}} will win the match or lose by less than {{spread}} {{scoring}} {{matchResolve}}."
+                    "plus": "{{team}} will win the match, or lose by less than {{spread}} {{scoring}} {{matchResolve}}."
                 },
                 "double-chance": {
                     "12": "{{team}} or {{team2}} will win the match {{matchResolve}}.",
@@ -362,7 +359,8 @@
                 "team-in-parlay": "{{team}} ya está en Parlay. El mismo equipo no se puede agregar a un Parlay más de una vez.",
                 "max-payout": "El pago máximo admitido es {{max}}",
                 "max-profit": "La ganancia máxima admitida es {{max}}",
-                "max-teams": "Máximo de {{max}} mercados en Parlay"
+                "max-teams": "Máximo de {{max}} mercados en Parlay",
+                "no-funds-multi-collateral": "Asegúrese de que su billetera tenga fondos suficientes ({{percentage}}% más del monto de la entrada)"
             },
             "fee": "Costo total",
             "payout": "Total recibido",
@@ -438,18 +436,6 @@
             "safebox": "Tarifas de SafeBox",
             "percent": "Por ciento",
             "rank": "Rank"
-        },
-        "periods": {
-            "period-0": "Primer periodo",
-            "period-1": "Cuarto periodo",
-            "period-2": "Segundo período",
-            "period-3": "Tercer periodo",
-            "period-4": "Quinto periodo",
-            "period-7": "Octavo periodo",
-            "period-6": "Septimo periodo",
-            "period-5": "Sexto periodo",
-            "period-9": "Décimo período",
-            "period-8": "noveno periodo"
         },
         "your-score": "Tu puntuación",
         "total-negative-pnl": "pérdidas totales",
@@ -751,7 +737,8 @@
         "pnl": {
             "title": "PnL por round",
             "no-data": "No hay data de PnL para rounds previos.",
-            "lifetime-pnl": "PnL Total"
+            "lifetime-pnl": "PnL Total",
+            "ongoing-pnl": "Ongoing PnL"
         },
         "user-transactions": {
             "type": {
@@ -765,13 +752,14 @@
     },
     "parlay-leaderboard": {
         "title": "Leaderboard de incentivos en Parlays",
-        "description": "A total of 10,000 OP will be distributed to the best parlays of the month. The tickets will be ranked based on the number of positions on the parlays, followed by total quote.",
-        "distribution-note": "Rewards will be distributed to the top 20 parlays for the month!",
+        "description": "A total of 5,000 OP will be distributed to the best parlays of the month. The tickets will be ranked based on the number of positions on the parlays, followed by total quote.",
+        "distribution-note": "Rewards will be distributed to the top 50 parlays for the month!",
         "no-parlays": "No winning parlays registered in the period yet.",
         "warning": "*Overtime team holds the right to disqualify wallets we suspect of gaming the system.",
         "info": "If multiple parlays have the same number of positions and total quote the following will be used as tie-breakers in respective order:",
         "info1": "- The amount paid",
         "info2": "- Actual total quote (gotten by multiplying positions individually)",
+        "info3": "*1 winning parlay eligible per wallet",
         "sidebar": {
             "title-parlay": "Parlay",
             "title-leaderboard": "Leaderboard",

@@ -93,7 +93,7 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({ open, tags, tagFilter, setT
                                                     components={{
                                                         duneLink: (
                                                             <a
-                                                                href="https://dune.com/leifu/overtime-npl-playoff-rewards-leaderboard"
+                                                                href="https://dune.com/leifu/overtime-nfl-superbowl-leaderboard-12-feb-2023"
                                                                 target="_blank"
                                                                 rel="noreferrer"
                                                             />
@@ -144,6 +144,8 @@ const LeagueFlag = (tagId: number | any) => {
             return <Flag size="m" code="ES" />;
         case TAGS_FLAGS.SERIE_A:
             return <Flag size="m" code="IT" />;
+        case TAGS_FLAGS.J1_LEAGUE:
+            return <Flag size="m" code="JP" />;
         default:
             return <FlagWorld alt="World flag" src="/world-flag.png" />;
     }

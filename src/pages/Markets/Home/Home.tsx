@@ -107,6 +107,15 @@ const Home: React.FC = () => {
 
     useEffect(
         () => {
+            if (
+                globalFilter !== GlobalFiltersEnum.OpenMarkets &&
+                globalFilter !== GlobalFiltersEnum.PendingMarkets &&
+                globalFilter !== GlobalFiltersEnum.ResolvedMarkets &&
+                globalFilter !== GlobalFiltersEnum.Canceled
+            ) {
+                resetFilters();
+            }
+
             sportParam != '' ? setSportFilter(sportParam as SportFilterEnum) : setSportParam(sportFilter);
             globalFilterParam != ''
                 ? setGlobalFilter(globalFilterParam as GlobalFiltersEnum)
@@ -173,53 +182,55 @@ const Home: React.FC = () => {
                       PendingMarkets: [],
                   };
 
-        const filteredMarkets = allMarkets[globalFilter].filter((market: SportMarketInfo) => {
-            if (marketSearch) {
-                if (
-                    !market.homeTeam.toLowerCase().includes(marketSearch.toLowerCase()) &&
-                    !market.awayTeam.toLowerCase().includes(marketSearch.toLowerCase())
-                ) {
-                    return false;
-                }
-            }
-
-            if (tagFilter.length > 0) {
-                if (!tagFilter.map((tag) => tag.id).includes(market.tags.map((tag) => Number(tag))[0])) {
-                    return false;
-                }
-            }
-
-            if (dateFilter !== 0) {
-                if (typeof dateFilter === 'number') {
-                    if (market.maturityDate.getTime() > dateFilter) {
-                        return false;
-                    }
-                } else {
-                    const dateToCompare = new Date(dateFilter);
-                    if (market.maturityDate.toDateString() != dateToCompare.toDateString()) {
-                        return false;
-                    }
-                }
-            }
-
-            if (sportFilter !== SportFilterEnum.All) {
-                if (sportFilter != SportFilterEnum.Favourites) {
-                    if (market.sport !== sportFilter) {
-                        return false;
-                    }
-                } else {
+        const filteredMarkets = (allMarkets[globalFilter] || allMarkets[GlobalFiltersEnum.OpenMarkets]).filter(
+            (market: SportMarketInfo) => {
+                if (marketSearch) {
                     if (
-                        !favouriteLeagues
-                            .filter((league) => league.favourite)
-                            .map((league) => league.id)
-                            .includes(market.tags.map((tag) => Number(tag))[0])
-                    )
+                        !market.homeTeam.toLowerCase().includes(marketSearch.toLowerCase()) &&
+                        !market.awayTeam.toLowerCase().includes(marketSearch.toLowerCase())
+                    ) {
                         return false;
+                    }
                 }
-            }
 
-            return true;
-        });
+                if (tagFilter.length > 0) {
+                    if (!tagFilter.map((tag) => tag.id).includes(market.tags.map((tag) => Number(tag))[0])) {
+                        return false;
+                    }
+                }
+
+                if (dateFilter !== 0) {
+                    if (typeof dateFilter === 'number') {
+                        if (market.maturityDate.getTime() > dateFilter) {
+                            return false;
+                        }
+                    } else {
+                        const dateToCompare = new Date(dateFilter);
+                        if (market.maturityDate.toDateString() != dateToCompare.toDateString()) {
+                            return false;
+                        }
+                    }
+                }
+
+                if (sportFilter !== SportFilterEnum.All) {
+                    if (sportFilter != SportFilterEnum.Favourites) {
+                        if (market.sport !== sportFilter) {
+                            return false;
+                        }
+                    } else {
+                        if (
+                            !favouriteLeagues
+                                .filter((league) => league.favourite)
+                                .map((league) => league.id)
+                                .includes(market.tags.map((tag) => Number(tag))[0])
+                        )
+                            return false;
+                    }
+                }
+
+                return true;
+            }
+        );
 
         const sortedFilteredMarkets = filteredMarkets.sort((a, b) => {
             switch (globalFilter) {
@@ -280,14 +291,16 @@ const Home: React.FC = () => {
 
     return (
         <Container>
-            <Info>
-                <Trans
-                    i18nKey="rewards.op-rewards-banner-message"
-                    components={{
-                        bold: <SPAAnchor href={buildHref(ROUTES.Rewards)} />,
-                    }}
-                />
-            </Info>
+            {networkId !== 42161 && (
+                <Info>
+                    <Trans
+                        i18nKey="rewards.op-rewards-banner-message"
+                        components={{
+                            bold: <SPAAnchor href={buildHref(ROUTES.Rewards)} />,
+                        }}
+                    />
+                </Info>
+            )}
             <ReactModal
                 isOpen={showBurger && isMobile}
                 onRequestClose={() => {
@@ -451,9 +464,11 @@ const Home: React.FC = () => {
                             );
                         })}
                     </SportFiltersContainer>
-                    <Suspense fallback={<Loader />}>
-                        <SidebarLeaderboard />
-                    </Suspense>
+                    {networkId !== 42161 && (
+                        <Suspense fallback={<Loader />}>
+                            <SidebarLeaderboard />
+                        </Suspense>
+                    )}
                 </SidebarContainer>
                 {/* MAIN PART */}
                 {sportMarketsQueryNew.isLoading ? (
@@ -524,7 +539,7 @@ const Home: React.FC = () => {
                 )}
                 {/* RIGHT PART */}
                 <SidebarContainer maxWidth={320}>
-                    {networkId === NetworkIdByName.OptimismMainnet && <GetUsd />}
+                    {[NetworkIdByName.OptimismMainnet, NetworkIdByName.ArbitrumOne].includes(networkId) && <GetUsd />}
                     <Suspense fallback={<Loader />}>
                         <Parlay />
                     </Suspense>

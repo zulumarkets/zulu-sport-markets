@@ -55,7 +55,7 @@ const MarketsList: React.FC<MarketsList> = ({ markets, league, language }) => {
                                     components={{
                                         duneLink: (
                                             <a
-                                                href="https://dune.com/leifu/overtime-npl-playoff-rewards-leaderboard"
+                                                href="https://dune.com/leifu/overtime-nfl-superbowl-leaderboard-12-feb-2023"
                                                 target="_blank"
                                                 rel="noreferrer"
                                             />
@@ -128,6 +128,8 @@ const LeagueFlag = (tagId: number | any) => {
             return <Flag size="l" code="ES" />;
         case TAGS_FLAGS.SERIE_A:
             return <Flag size="l" code="IT" />;
+        case TAGS_FLAGS.J1_LEAGUE:
+            return <Flag size="l" code="JP" />;
         default:
             return <FlagWorld alt="World flag" src="/world-flag.png" />;
     }

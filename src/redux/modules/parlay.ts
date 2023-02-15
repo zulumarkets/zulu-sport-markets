@@ -8,7 +8,7 @@ import { RootState } from '../rootReducer';
 
 const sliceName = 'parlay';
 
-const DEFAULT_MAX_NUMBER_OF_MATCHES = 6;
+const DEFAULT_MAX_NUMBER_OF_MATCHES = 8;
 
 const getDefaultParlay = (): ParlaysMarketPosition[] => {
     const lsParlay = localStore.get(LOCAL_STORAGE_KEYS.PARLAY);
@@ -97,6 +97,9 @@ export const parlaySlice = createSlice({
         setPayment: (state, action: PayloadAction<ParlayPayment>) => {
             state.payment = { ...state.payment, ...action.payload };
         },
+        setPaymentSelectedStableIndex: (state, action: PayloadAction<COLLATERALS_INDEX>) => {
+            state.payment = { ...state.payment, selectedStableIndex: action.payload };
+        },
         resetParlayError: (state) => {
             state.error = getDefaultError();
         },
@@ -109,6 +112,7 @@ export const {
     removeFromParlay,
     removeAll,
     setPayment,
+    setPaymentSelectedStableIndex,
     resetParlayError,
 } = parlaySlice.actions;
 
