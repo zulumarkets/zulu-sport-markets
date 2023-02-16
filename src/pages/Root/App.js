@@ -5,7 +5,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, Route, Router, Switch } from 'react-router-dom';
 import { setAppReady, setMobileState } from 'redux/modules/app';
-import { getNetworkId, updateNetworkSettings, updateWallet, getIsWalletConnected } from 'redux/modules/wallet';
+import { getNetwork, updateNetworkSettings, updateWallet, getIsWalletConnected } from 'redux/modules/wallet';
 import queryConnector from 'utils/queryConnector';
 import { history } from 'utils/routes';
 import networkConnector from 'utils/networkConnector';
@@ -37,7 +37,7 @@ const ParlayLeaderboard = lazy(() => import('pages/ParlayLeaderboard'));
 const App = () => {
     const dispatch = useDispatch();
     const { trackPageView, trackEvent } = useMatomo();
-    const networkId = useSelector((state) => getNetworkId(state));
+    const { networkId, isDefaultNetwork } = useSelector((state) => getNetwork(state));
     const isWalletConnected = useSelector((state) => getIsWalletConnected(state));
 
     const provider = useProvider({ chainId: networkId });
@@ -104,15 +104,24 @@ const App = () => {
             } else {
                 console.log('d networkId', networkId, 'client.lastUsedChainId ', client.lastUsedChainId);
 
-                if (networkId !== client.lastUsedChainId) {
+                if (isDefaultNetwork) {
+                    if (client.lastUsedChainId === undefined) {
+                        providerNetworkId = networkId;
+                    } else {
+                        return;
+                    }
+                } else if (networkId !== client.lastUsedChainId) {
                     console.log('wagmi switchNetwork started', switchNetwork);
                     switchNetwork?.(networkId);
                     while (isLoading && pendingChainId === networkId) {
                         null;
                     }
                     console.log('wagmi switchNetwork finished');
+                    providerNetworkId = isNetworkSupported(networkId) ? networkId : DEFAULT_NETWORK_ID;
+                } else {
+                    return;
                 }
-                providerNetworkId = isNetworkSupported(networkId) ? networkId : DEFAULT_NETWORK_ID;
+
                 console.log('providerNetworkId', providerNetworkId);
 
                 console.log('after d networkId', networkId, 'client.lastUsedChainId ', client.lastUsedChainId);
@@ -138,7 +147,18 @@ const App = () => {
             }
         };
         init();
-    }, [dispatch, provider, signer, client.lastUsedChainId, networkId, disconnect, switchNetwork]);
+    }, [
+        dispatch,
+        provider,
+        signer,
+        client.lastUsedChainId,
+        networkId,
+        disconnect,
+        switchNetwork,
+        pendingChainId,
+        isLoading,
+        isDefaultNetwork,
+    ]);
 
     useEffect(() => {
         dispatch(updateWallet({ walletAddress: address }));
