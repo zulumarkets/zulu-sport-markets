@@ -86,17 +86,22 @@ const App = () => {
     useEffect(() => {
         const init = async () => {
             let providerNetworkId;
+
             if (hasEthereumInjected()) {
                 if (isNetworkSupported(parseInt(window.ethereum?.chainId, 16))) {
+                    console.log('a');
                     providerNetworkId = parseInt(window.ethereum?.chainId, 16);
                 } else if (isNetworkSupported(client.lastUsedChainId) && client.lastUsedChainId) {
+                    console.log('b');
                     providerNetworkId = client.lastUsedChainId;
                     // disconnect();
                 } else {
+                    console.log('c');
                     providerNetworkId = DEFAULT_NETWORK_ID;
                     disconnect();
                 }
             } else {
+                console.log('d');
                 providerNetworkId = isNetworkSupported(networkId) ? networkId : DEFAULT_NETWORK_ID;
             }
             try {
