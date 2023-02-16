@@ -119,7 +119,7 @@ const App = () => {
                 console.log('signer', signer, isLoading);
             }
             try {
-                if (networkId !== providerNetworkId) {
+                if (providerNetworkId && providerNetworkId !== networkId) {
                     dispatch(updateNetworkSettings({ networkId: providerNetworkId }));
                 }
                 networkConnector.setNetworkSettings({
