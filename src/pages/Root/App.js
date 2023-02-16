@@ -45,7 +45,7 @@ const App = () => {
     const { data: signer, isLoading, status } = useSigner();
     const client = useClient();
     const { disconnect } = useDisconnect();
-    const { switchNetwork } = useSwitchNetwork();
+    const { switchNetworkAsync } = useSwitchNetwork();
 
     queryConnector.setQueryClient();
     console.log('status', status);
@@ -109,9 +109,9 @@ const App = () => {
                     providerNetworkId = client.lastUsedChainId || networkId;
                 } else if (networkId !== client.lastUsedChainId) {
                     console.log('wagmi switchNetwork started', switchNetwork);
-                    switchNetwork?.(networkId);
+                    await switchNetworkAsync?.(networkId);
                     console.log('wagmi switchNetwork finished');
-                    providerNetworkId = isNetworkSupported(networkId) ? networkId : DEFAULT_NETWORK_ID;
+                    providerNetworkId = networkId;
                 } else {
                     providerNetworkId = client.lastUsedChainId || networkId;
                 }
@@ -123,21 +123,19 @@ const App = () => {
             }
 
             try {
-                if (providerNetworkId) {
-                    if (providerNetworkId !== networkId) {
-                        dispatch(updateNetworkSettings({ networkId: providerNetworkId }));
-                    }
-                    networkConnector.setNetworkSettings({
-                        networkId: providerNetworkId,
-                        provider:
-                            !!signer && !!signer.provider
-                                ? new ethers.providers.Web3Provider(signer.provider.provider, 'any')
-                                : window.ethereum
-                                ? new ethers.providers.Web3Provider(window.ethereum, 'any')
-                                : provider,
-                        signer,
-                    });
+                if (providerNetworkId !== networkId) {
+                    dispatch(updateNetworkSettings({ networkId: providerNetworkId }));
                 }
+                networkConnector.setNetworkSettings({
+                    networkId: providerNetworkId,
+                    provider:
+                        !!signer && !!signer.provider
+                            ? new ethers.providers.Web3Provider(signer.provider.provider, 'any')
+                            : window.ethereum
+                            ? new ethers.providers.Web3Provider(window.ethereum, 'any')
+                            : provider,
+                    signer,
+                });
 
                 dispatch(setAppReady());
             } catch (e) {
@@ -153,7 +151,7 @@ const App = () => {
         client.lastUsedChainId,
         networkId,
         disconnect,
-        switchNetwork,
+        switchNetworkAsync,
         isLoading,
         isDefaultNetwork,
     ]);
