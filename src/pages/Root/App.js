@@ -120,6 +120,10 @@ const App = () => {
 
                 console.log('after d networkId', networkId, 'client.lastUsedChainId ', client.lastUsedChainId);
                 console.log('signer', signer, isError, isLoading);
+                await new Promise((resolve) => {
+                    return setTimeout(resolve, 5000);
+                });
+                console.log('signer after 5s', signer, isError, isLoading);
             }
             try {
                 dispatch(updateNetworkSettings({ networkId: providerNetworkId }));
