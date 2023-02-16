@@ -102,13 +102,16 @@ const App = () => {
                     disconnect();
                 }
             } else {
-                console.log('d', networkId, client.lastUsedChainId);
-                providerNetworkId = isNetworkSupported(networkId) ? networkId : DEFAULT_NETWORK_ID;
+                console.log('d networkId', networkId, 'client.lastUsedChainId ', client.lastUsedChainId);
+                providerNetworkId = isNetworkSupported(client.lastUsedChainId)
+                    ? client.lastUsedChainId
+                    : DEFAULT_NETWORK_ID;
                 console.log('providerNetworkId', providerNetworkId);
-                console.log('provider', provider);
-                switchNetwork?.(providerNetworkId);
-                console.log('wagmi switchNetwork', switchNetwork);
-                console.log('lastUsedChainId', networkId, client.lastUsedChainId);
+                if (networkId !== client.lastUsedChainId) {
+                    switchNetwork?.(providerNetworkId);
+                    console.log('wagmi switchNetwork', switchNetwork);
+                }
+                console.log('after d networkId', networkId, 'client.lastUsedChainId ', client.lastUsedChainId);
             }
             try {
                 dispatch(updateNetworkSettings({ networkId: providerNetworkId }));
