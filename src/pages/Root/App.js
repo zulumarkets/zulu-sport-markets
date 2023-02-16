@@ -105,11 +105,8 @@ const App = () => {
                 console.log('d networkId', networkId, 'client.lastUsedChainId ', client.lastUsedChainId);
 
                 if (isDefaultNetwork) {
-                    if (client.lastUsedChainId === undefined) {
-                        providerNetworkId = networkId;
-                    } else {
-                        return;
-                    }
+                    console.log('default network', networkId, client.lastUsedChainId);
+                    providerNetworkId = client.lastUsedChainId || networkId;
                 } else if (networkId !== client.lastUsedChainId) {
                     console.log('wagmi switchNetwork started', switchNetwork);
                     switchNetwork?.(networkId);
