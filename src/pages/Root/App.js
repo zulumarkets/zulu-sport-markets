@@ -101,8 +101,10 @@ const App = () => {
                     disconnect();
                 }
             } else {
-                console.log('d');
+                console.log('d', networkId);
                 providerNetworkId = isNetworkSupported(networkId) ? networkId : DEFAULT_NETWORK_ID;
+                console.log('providerNetworkId', providerNetworkId);
+                console.log('provider', provider);
             }
             try {
                 dispatch(updateNetworkSettings({ networkId: providerNetworkId }));
