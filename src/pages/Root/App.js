@@ -14,7 +14,7 @@ import ROUTES from 'constants/routes';
 import Theme from 'layouts/Theme';
 import DappLayout from 'layouts/DappLayout';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
-import { useAccount, useProvider, useSigner, useClient, useDisconnect } from 'wagmi';
+import { useAccount, useProvider, useSigner, useClient, useDisconnect, useSwitchNetwork } from 'wagmi';
 import LandingPageLayout from 'layouts/LandingPageLayout';
 import { ethers } from 'ethers';
 import BannerCarousel from 'components/BannerCarousel';
@@ -45,6 +45,7 @@ const App = () => {
     const { data: signer } = useSigner();
     const client = useClient();
     const { disconnect } = useDisconnect();
+    const { switchNetwork } = useSwitchNetwork();
 
     queryConnector.setQueryClient();
 
@@ -105,6 +106,9 @@ const App = () => {
                 providerNetworkId = isNetworkSupported(networkId) ? networkId : DEFAULT_NETWORK_ID;
                 console.log('providerNetworkId', providerNetworkId);
                 console.log('provider', provider);
+                switchNetwork?.(providerNetworkId);
+                console.log('wagmi switchNetwork', switchNetwork);
+                console.log('lastUsedChainId', networkId, client.lastUsedChainId);
             }
             try {
                 dispatch(updateNetworkSettings({ networkId: providerNetworkId }));
@@ -127,7 +131,7 @@ const App = () => {
             }
         };
         init();
-    }, [dispatch, provider, signer, client.lastUsedChainId, networkId, disconnect]);
+    }, [dispatch, provider, signer, client.lastUsedChainId, networkId, disconnect, switchNetwork]);
 
     useEffect(() => {
         dispatch(updateWallet({ walletAddress: address }));
