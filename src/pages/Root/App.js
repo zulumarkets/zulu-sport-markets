@@ -110,9 +110,6 @@ const App = () => {
                 } else if (networkId !== client.lastUsedChainId) {
                     console.log('wagmi switchNetwork started', switchNetwork);
                     switchNetwork?.(networkId);
-                    await new Promise((resolve) => {
-                        return setTimeout(resolve, 5000);
-                    });
                     console.log('wagmi switchNetwork finished');
                     providerNetworkId = isNetworkSupported(networkId) ? networkId : DEFAULT_NETWORK_ID;
                 } else {
