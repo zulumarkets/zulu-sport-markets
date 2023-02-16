@@ -115,6 +115,8 @@ const App = () => {
                     });
                     console.log('wagmi switchNetwork finished');
                     providerNetworkId = isNetworkSupported(networkId) ? networkId : DEFAULT_NETWORK_ID;
+                } else {
+                    providerNetworkId = client.lastUsedChainId || networkId;
                 }
 
                 console.log('providerNetworkId', providerNetworkId);
