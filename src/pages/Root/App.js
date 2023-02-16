@@ -110,9 +110,9 @@ const App = () => {
                 } else if (networkId !== client.lastUsedChainId) {
                     console.log('wagmi switchNetwork started', switchNetwork);
                     switchNetwork?.(networkId);
-                    while (isLoading && pendingChainId === networkId) {
-                        null;
-                    }
+                    // while (isLoading && pendingChainId === networkId) {
+                    //     null;
+                    // }
                     console.log('wagmi switchNetwork finished');
                     providerNetworkId = isNetworkSupported(networkId) ? networkId : DEFAULT_NETWORK_ID;
                 } else {
@@ -152,8 +152,8 @@ const App = () => {
         networkId,
         disconnect,
         switchNetwork,
-        pendingChainId,
-        isLoading,
+        // pendingChainId,
+        // isLoading,
         isDefaultNetwork,
     ]);
 
