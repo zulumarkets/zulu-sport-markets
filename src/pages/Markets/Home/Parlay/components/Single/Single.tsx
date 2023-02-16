@@ -255,7 +255,8 @@ const Single: React.FC<SingleProps> = ({ market, parlayPayment }) => {
         const fetchData = async () => {
             const divider = selectedStableIndex == 0 || selectedStableIndex == 1 ? 1e18 : 1e6;
             const { sportsAMMContract, signer } = networkConnector;
-            console.log(signer && sportsAMMContract);
+            console.log('signer', signer);
+            console.log('sportsAMMContract', sportsAMMContract);
             if (signer && sportsAMMContract) {
                 const contract = new ethers.Contract(market.address, sportsMarketContract.abi, signer);
                 contract.connect(signer);
