@@ -255,10 +255,12 @@ const Single: React.FC<SingleProps> = ({ market, parlayPayment }) => {
         const fetchData = async () => {
             const divider = selectedStableIndex == 0 || selectedStableIndex == 1 ? 1e18 : 1e6;
             const { sportsAMMContract, signer } = networkConnector;
+            console.log(signer && sportsAMMContract);
             if (signer && sportsAMMContract) {
                 const contract = new ethers.Contract(market.address, sportsMarketContract.abi, signer);
                 contract.connect(signer);
                 const roundedMaxAmount = floorNumberToDecimals(availablePerPosition[market.position].available || 0);
+                console.log('roundedMaxAmount', roundedMaxAmount, availablePerPosition[market.position].available);
                 if (roundedMaxAmount) {
                     const [sUSDToSpendForMaxAmount, ammBalances] = await Promise.all([
                         fetchAmmQuote(roundedMaxAmount),
