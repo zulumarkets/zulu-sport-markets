@@ -483,6 +483,20 @@ const Single: React.FC<SingleProps> = ({ market, parlayPayment }) => {
 
     const MIN_TOKEN_AMOUNT = 1;
     useEffect(() => {
+        console.log(
+            'usdAmountValue',
+            usdAmountValue,
+            'paymentTokenBalance',
+            paymentTokenBalance,
+            'tokenAmount',
+            tokenAmount,
+            'isBuying',
+            isBuying,
+            'isAllowing',
+            isAllowing,
+            'positionPriceDetailsQuery.isLoading',
+            positionPriceDetailsQuery.isLoading
+        );
         // Minimum of token amount
         if (
             !Number(usdAmountValue) ||
