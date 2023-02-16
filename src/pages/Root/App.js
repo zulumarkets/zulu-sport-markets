@@ -117,13 +117,8 @@ const App = () => {
                 }
 
                 console.log('providerNetworkId', providerNetworkId);
-
                 console.log('after d networkId', networkId, 'client.lastUsedChainId ', client.lastUsedChainId);
                 console.log('signer', signer, isError, isLoading);
-                await new Promise((resolve) => {
-                    return setTimeout(resolve, 5000);
-                });
-                console.log('signer after 5s', signer, isError, isLoading);
             }
             try {
                 dispatch(updateNetworkSettings({ networkId: providerNetworkId }));
@@ -139,7 +134,10 @@ const App = () => {
                             : provider,
                     signer,
                 });
-                dispatch(setAppReady());
+                if (!isLoading) {
+                    console.log('APP READY');
+                    dispatch(setAppReady());
+                }
             } catch (e) {
                 dispatch(setAppReady());
                 console.log(e);
