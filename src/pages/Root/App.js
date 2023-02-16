@@ -42,7 +42,7 @@ const App = () => {
 
     const provider = useProvider({ chainId: networkId });
     const { address } = useAccount();
-    const { data: signer, isError, isLoading } = useSigner();
+    const { data: signer, isLoading } = useSigner();
     const client = useClient();
     const { disconnect } = useDisconnect();
     const { switchNetwork } = useSwitchNetwork();
@@ -112,11 +112,13 @@ const App = () => {
                     switchNetwork?.(networkId);
                     console.log('wagmi switchNetwork finished');
                     providerNetworkId = isNetworkSupported(networkId) ? networkId : DEFAULT_NETWORK_ID;
+                } else {
+                    if (!signer) return;
                 }
 
                 console.log('providerNetworkId', providerNetworkId);
                 console.log('after d networkId', networkId, 'client.lastUsedChainId ', client.lastUsedChainId);
-                console.log('signer', signer, isError, isLoading);
+                console.log('signer', signer, isLoading);
             }
             try {
                 dispatch(updateNetworkSettings({ networkId: providerNetworkId }));
@@ -132,10 +134,7 @@ const App = () => {
                             : provider,
                     signer,
                 });
-                if (!isLoading) {
-                    console.log('APP READY');
-                    dispatch(setAppReady());
-                }
+                dispatch(setAppReady());
             } catch (e) {
                 dispatch(setAppReady());
                 console.log(e);
@@ -150,7 +149,6 @@ const App = () => {
         networkId,
         disconnect,
         switchNetwork,
-        isError,
         isLoading,
         isDefaultNetwork,
     ]);
