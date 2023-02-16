@@ -267,6 +267,7 @@ const Single: React.FC<SingleProps> = ({ market, parlayPayment }) => {
                     if (!mountedRef.current) return null;
 
                     const ammBalanceForSelectedPosition = ammBalances[market.position];
+                    console.log('ammBalanceForSelectedPosition', ammBalanceForSelectedPosition);
                     const amountOfTokens =
                         fetchAmountOfTokensForXsUSDAmount(
                             Number(usdAmountValue),
@@ -276,6 +277,7 @@ const Single: React.FC<SingleProps> = ({ market, parlayPayment }) => {
                             ammBalanceForSelectedPosition / divider
                         ) || 0;
                     if (amountOfTokens > (availablePerPosition[market.position].available || 0)) {
+                        console.log('set to zero', amountOfTokens, availablePerPosition[market.position].available);
                         setTokenAmount(0);
                         return;
                     }
@@ -293,6 +295,7 @@ const Single: React.FC<SingleProps> = ({ market, parlayPayment }) => {
                         recalculatedTokenAmount > flooredAmountOfTokens
                             ? flooredAmountOfTokens
                             : recalculatedTokenAmount;
+                    console.log('maxAvailableTokenAmount', maxAvailableTokenAmount);
                     setTokenAmount(maxAvailableTokenAmount);
 
                     if (Number(usdAmountValue) > 0) {
