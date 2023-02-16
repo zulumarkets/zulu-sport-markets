@@ -112,8 +112,6 @@ const App = () => {
                     switchNetwork?.(networkId);
                     console.log('wagmi switchNetwork finished');
                     providerNetworkId = isNetworkSupported(networkId) ? networkId : DEFAULT_NETWORK_ID;
-                } else {
-                    if (!signer) return;
                 }
 
                 console.log('providerNetworkId', providerNetworkId);
@@ -121,7 +119,9 @@ const App = () => {
                 console.log('signer', signer, isLoading);
             }
             try {
-                dispatch(updateNetworkSettings({ networkId: providerNetworkId }));
+                if (networkId !== providerNetworkId) {
+                    dispatch(updateNetworkSettings({ networkId: providerNetworkId }));
+                }
                 networkConnector.setNetworkSettings({
                     networkId: providerNetworkId,
                     provider:
