@@ -101,7 +101,7 @@ const App = () => {
                     disconnect();
                 }
             } else {
-                console.log('d', networkId);
+                console.log('d', networkId, client.lastUsedChainId);
                 providerNetworkId = isNetworkSupported(networkId) ? networkId : DEFAULT_NETWORK_ID;
                 console.log('providerNetworkId', providerNetworkId);
                 console.log('provider', provider);
@@ -166,6 +166,7 @@ const App = () => {
             window.ethereum.on('chainChanged', (chainId) => {
                 const chainIdInt = parseInt(chainId, 16);
                 const supportedNetworkId = isNetworkSupported(chainIdInt) ? chainIdInt : DEFAULT_NETWORK_ID;
+                console.log('chainChanged supportedNetworkId', supportedNetworkId);
                 dispatch(updateNetworkSettings({ networkId: supportedNetworkId }));
                 if (isNetworkSupported(chainIdInt)) {
                     if (window.ethereum.isMetaMask && !isWalletConnected) {

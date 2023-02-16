@@ -135,6 +135,7 @@ const WalletInfo: React.FC = () => {
                                                                         params: [{ chainId: network.chainId }],
                                                                     });
                                                                 } else {
+                                                                    console.log('wallet dispatch', network.networkId);
                                                                     dispatch(
                                                                         updateNetworkSettings({
                                                                             networkId: network.networkId as NetworkId,
