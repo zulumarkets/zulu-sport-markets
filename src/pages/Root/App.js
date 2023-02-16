@@ -42,13 +42,13 @@ const App = () => {
 
     const provider = useProvider({ chainId: networkId });
     const { address } = useAccount();
-    const { data: signer, isLoading, status } = useSigner();
+    const { data: signer, isLoading } = useSigner();
     const client = useClient();
     const { disconnect } = useDisconnect();
     const { switchNetworkAsync } = useSwitchNetwork();
 
     queryConnector.setQueryClient();
-    console.log('status', status);
+
     useEffect(() => {
         const root = document.querySelector('#root');
 
