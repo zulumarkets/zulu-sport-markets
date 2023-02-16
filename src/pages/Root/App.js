@@ -118,22 +118,24 @@ const App = () => {
                 console.log('after d networkId', networkId, 'client.lastUsedChainId ', client.lastUsedChainId);
                 console.log('signer', signer, isLoading);
             }
+
             try {
                 if (providerNetworkId && providerNetworkId !== networkId) {
                     dispatch(updateNetworkSettings({ networkId: providerNetworkId }));
+                    networkConnector.setNetworkSettings({
+                        networkId: providerNetworkId,
+                        provider:
+                            parseInt(window.ethereum?.chainId, 16) === providerNetworkId
+                                ? !!signer && !!signer.provider
+                                    ? new ethers.providers.Web3Provider(signer.provider.provider, 'any')
+                                    : window.ethereum
+                                    ? new ethers.providers.Web3Provider(window.ethereum, 'any')
+                                    : provider
+                                : provider,
+                        signer,
+                    });
                 }
-                networkConnector.setNetworkSettings({
-                    networkId: providerNetworkId,
-                    provider:
-                        parseInt(window.ethereum?.chainId, 16) === providerNetworkId
-                            ? !!signer && !!signer.provider
-                                ? new ethers.providers.Web3Provider(signer.provider.provider, 'any')
-                                : window.ethereum
-                                ? new ethers.providers.Web3Provider(window.ethereum, 'any')
-                                : provider
-                            : provider,
-                    signer,
-                });
+
                 dispatch(setAppReady());
             } catch (e) {
                 dispatch(setAppReady());
