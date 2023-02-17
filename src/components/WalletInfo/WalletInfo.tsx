@@ -50,6 +50,8 @@ const WalletInfo: React.FC = () => {
 
     const walletBalance = overtimeVoucher ? overtimeVoucher.remainingAmount : stableCoinBalance;
 
+    console.log('isMetaMask', window.ethereum?.isMetaMask);
+
     return (
         <Container>
             <FlexDivColumn>
