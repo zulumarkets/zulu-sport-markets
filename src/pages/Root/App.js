@@ -45,7 +45,7 @@ const App = () => {
     const { data: signer, isLoading } = useSigner();
     const client = useClient();
     const { disconnect } = useDisconnect();
-    const { switchNetworkAsync } = useSwitchNetwork();
+    const { switchNetwork } = useSwitchNetwork();
 
     queryConnector.setQueryClient();
 
@@ -109,7 +109,7 @@ const App = () => {
                     providerNetworkId = client.lastUsedChainId || networkId;
                 } else if (networkId !== client.lastUsedChainId) {
                     console.log('wagmi switchNetwork started', switchNetwork);
-                    await switchNetworkAsync?.(networkId);
+                    switchNetwork?.(networkId);
                     console.log('wagmi switchNetwork finished');
                     providerNetworkId = networkId;
                 } else {
@@ -151,7 +151,7 @@ const App = () => {
         client.lastUsedChainId,
         networkId,
         disconnect,
-        switchNetworkAsync,
+        switchNetwork,
         isLoading,
         isDefaultNetwork,
     ]);
