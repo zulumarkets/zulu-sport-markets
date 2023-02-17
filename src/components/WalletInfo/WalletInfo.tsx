@@ -77,7 +77,9 @@ const WalletInfo: React.FC = () => {
                                     >
                                         <Text className="wallet-info">
                                             {isWalletConnected
-                                                ? truncateAddress(walletAddress, 5, 5)
+                                                ? truncateAddress(walletAddress, 5, 5) +
+                                                  'isMM:' +
+                                                  window.ethereum?.isMetaMask
                                                 : t('common.wallet.connect-your-wallet')}
                                         </Text>
                                         {isWalletConnected && (
