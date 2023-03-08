@@ -17,7 +17,7 @@ import Tooltip from 'components/Tooltip';
 import useSUSDWalletBalance from 'queries/wallet/usesUSDWalletBalance';
 import { FlexDivCentered, FlexDivColumn } from 'styles/common';
 import { NetworkId } from 'types/network';
-import { NETWORK_SWITCHER_SUPPORTED_NETWORKS } from 'constants/network';
+import { NETWORK_SWITCHER_SUPPORTED_NETWORKS, SUPPORTED_NETWORKS_DESCRIPTIONS } from 'constants/network';
 
 const WalletInfo: React.FC = () => {
     const { t } = useTranslation();
@@ -49,6 +49,15 @@ const WalletInfo: React.FC = () => {
     }, [overtimeVoucherQuery.isSuccess, overtimeVoucherQuery.data]);
 
     const walletBalance = overtimeVoucher ? overtimeVoucher.remainingAmount : stableCoinBalance;
+
+    // currently not supported network synchronization between browser without integrated wallet and wallet app on mobile
+    const hideNetworkSwitcher =
+        isMobile &&
+        !window.ethereum?.isMetaMask &&
+        !window.ethereum?.isBraveWallet &&
+        !window.ethereum?.isCoinbaseWallet &&
+        !window.ethereum?.isTrust &&
+        !window.ethereum?.isCoinbaseWallet;
 
     return (
         <Container>
@@ -120,9 +129,9 @@ const WalletInfo: React.FC = () => {
                                             <NetworkIcon
                                                 className={`icon ${networkId === 42161 ? 'icon--arb' : 'icon--op'}`}
                                             />
-                                            <DownIcon className={`icon icon--arrow-down`} />
+                                            {!hideNetworkSwitcher && <DownIcon className={`icon icon--arrow-down`} />}
                                         </NetworkIconWrapper>
-                                        {dropDownOpen && (
+                                        {dropDownOpen && !hideNetworkSwitcher && (
                                             <NetworkDropDown>
                                                 {NETWORK_SWITCHER_SUPPORTED_NETWORKS.map((network) => (
                                                     <NetworkWrapper
@@ -130,10 +139,34 @@ const WalletInfo: React.FC = () => {
                                                         onClick={async () => {
                                                             if (networkId !== network.networkId) {
                                                                 if (hasEthereumInjected()) {
-                                                                    await (window.ethereum as any).request({
-                                                                        method: 'wallet_switchEthereumChain',
-                                                                        params: [{ chainId: network.chainId }],
-                                                                    });
+                                                                    try {
+                                                                        await (window.ethereum as any).request({
+                                                                            method: 'wallet_switchEthereumChain',
+                                                                            params: [{ chainId: network.chainId }],
+                                                                        });
+                                                                    } catch (switchError: any) {
+                                                                        if (switchError.code === 4902) {
+                                                                            try {
+                                                                                await (window.ethereum as any).request({
+                                                                                    method: 'wallet_addEthereumChain',
+                                                                                    params: [
+                                                                                        SUPPORTED_NETWORKS_DESCRIPTIONS[
+                                                                                            +network.chainId
+                                                                                        ],
+                                                                                    ],
+                                                                                });
+                                                                                await (window.ethereum as any).request({
+                                                                                    method:
+                                                                                        'wallet_switchEthereumChain',
+                                                                                    params: [
+                                                                                        { chainId: network.chainId },
+                                                                                    ],
+                                                                                });
+                                                                            } catch (addError) {
+                                                                                console.log(addError);
+                                                                            }
+                                                                        }
+                                                                    }
                                                                 } else {
                                                                     dispatch(
                                                                         updateNetworkSettings({

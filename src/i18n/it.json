@@ -147,7 +147,9 @@
         "docs": "documenti",
         "tutorial": "Esercitazione",
         "github": "GitHub",
-        "disclaimer": "Questo frontend è ospitato in modo decentralizzato su IPFS (InterPlanetary File System). Serve per visualizzare i dati blockchain e aiutare gli utenti a interagire con i contratti Overtime che appartengono a Thales DAO. In questo modo aiuta gli utenti a comprendere i rischi dell'utilizzo di tali contratti intelligenti e cosa comportano le interazioni specifiche. Il frontend non facilita nient'altro oltre all'interazione con quei contratti in modo visivamente completo. In tal modo, non è diverso dalla funzionalità fornita da Etherscan o RPC (Remote Procedure Calls). Il frontend stesso non appartiene a Thales DAO oa nessun individuo. Non memorizza dati utente e non ha back-end o database dedicati. Tutto il codice viene caricato staticamente direttamente nell'IPFS. Proprio come la blockchain non fa geo-fencing e nessun KYC, nemmeno questo frontend può farlo. Tuttavia, interagendo con i contratti Thales DAO, ti impegni a leggere, comprendere e accettare i <disclaimer>termini di utilizzo di Thales DAO</disclaimer> e ti assumi la piena responsabilità nel caso in cui tu non abbia aderito a tali termini. Thales DAO utilizza il token sUSD decentralizzato come garanzia per tutte le sue transazioni. Così facendo eredita tutte le regole di utilizzo da Synthetix DAO per quanto riguarda le garanzie e non ne introduce di proprie."
+        "disclaimer": "Questo frontend è ospitato in modo decentralizzato su IPFS (InterPlanetary File System). Serve per visualizzare i dati blockchain e aiutare gli utenti a interagire con i contratti Overtime che appartengono a Thales DAO. In questo modo aiuta gli utenti a comprendere i rischi dell'utilizzo di tali contratti intelligenti e cosa comportano le interazioni specifiche. Il frontend non facilita nient'altro oltre all'interazione con quei contratti in modo visivamente completo. In tal modo, non è diverso dalla funzionalità fornita da Etherscan o RPC (Remote Procedure Calls). Il frontend stesso non appartiene a Thales DAO oa nessun individuo. Non memorizza dati utente e non ha back-end o database dedicati. Tutto il codice viene caricato staticamente direttamente nell'IPFS. Proprio come la blockchain non fa geo-fencing e nessun KYC, nemmeno questo frontend può farlo. Tuttavia, interagendo con i contratti Thales DAO, ti impegni a leggere, comprendere e accettare i <disclaimer>termini di utilizzo di Thales DAO</disclaimer> e ti assumi la piena responsabilità nel caso in cui tu non abbia aderito a tali termini. Thales DAO utilizza il token sUSD decentralizzato come garanzia per tutte le sue transazioni. Così facendo eredita tutte le regole di utilizzo da Synthetix DAO per quanto riguarda le garanzie e non ne introduce di proprie.",
+        "instagram": "Instagram",
+        "reddit": "Reddit"
     },
     "market": {
         "question-label": "Question",
@@ -357,6 +359,7 @@
                 "single-min-amount": "L'importo minimo è {{min}}",
                 "same-team": "La stessa squadra non può essere in un Parlay più di una volta",
                 "team-in-parlay": "{{team}} è già a Parlay. La stessa squadra non può essere aggiunta a un Parlay più di una volta.",
+                "max-double-chances": "The maximum number of double chance markets in Parlay is {{max}}.",
                 "max-payout": "Il pagamento massimo supportato è {{max}}",
                 "max-teams": "Massimo {{max}} mercati a Parlay",
                 "max-profit": "Il profitto massimo supportato è {{max}}",
@@ -414,7 +417,8 @@
             },
             "labels": {
                 "language": "Lingua",
-                "get-started": "Iniziare"
+                "get-started": "Iniziare",
+                "march-madness": "la follia di marzo"
             }
         },
         "incentivized-markets": "MERCATI INCENTIVATI",
@@ -755,8 +759,8 @@
     },
     "parlay-leaderboard": {
         "title": "Classifica degli incentivi Parlay",
-        "description": "A total of 5,000 OP will be distributed to the best parlays of the month. The tickets will be ranked based on the number of positions on the parlays, followed by total quote.",
-        "distribution-note": "Rewards will be distributed to the top 50 parlays for the month!",
+        "description": "A total of <bold>{{amount}}</bold> will be distributed to the best parlays on a <bold>bi-weekly basis</bold> starting from March 1st. The tickets will be ranked based on the number of positions on the parlays, followed by total quote.",
+        "distribution-note": "Rewards will be distributed to the <bold>TOP 30 parlays every 2 weeks</bold>!",
         "no-parlays": "No winning parlays registered in the period yet.",
         "warning": "*Overtime team holds the right to disqualify wallets we suspect of gaming the system.",
         "info": "If multiple parlays have the same number of positions and total quote the following will be used as tie-breakers in respective order:",
@@ -777,18 +781,10 @@
             "positions": "Posizioni"
         },
         "periods": {
-            "period-0": "Dicembre",
-            "period-11": "novembre",
-            "period-2": "febbraio",
-            "period-8": "agosto",
-            "period-4": "aprile",
-            "period-5": "Maggio",
-            "period-6": "Giugno",
-            "period-3": "Marzo",
-            "period-7": "Luglio",
-            "period-1": "Gennaio",
-            "period-9": "settembre",
-            "period-10": "ottobre"
+            "february": "February",
+            "period-end-label": "The period ends in",
+            "period-ended-label": "Period ended",
+            "bi-weekly-period": "Bi-weekly period"
         }
     },
     "wizard": {
@@ -826,5 +822,92 @@
             "address": "Your address QR code",
             "copied": "Copiato!"
         }
+    },
+    "march-madness": {
+        "tabs": {
+            "home": "Casa",
+            "leaderboard": "Classifica",
+            "brackets": "Parentesi"
+        },
+        "back-to-markets": "Torniamo ai mercati",
+        "brackets": {
+            "team-2": "Squadra 2",
+            "team-1": "Squadra 1",
+            "submit-text": "Staffa di finitura",
+            "submit-modify": "Aggiorna staffa",
+            "submit": "Staffa di finitura",
+            "modal": {
+                "button-minting": "Conio...",
+                "button-mint": "Come NFT",
+                "finish-text-1": "Ben fatto!",
+                "update-text": "Hai già coniato il tuo NFT!",
+                "button-updating": "In aggiornamento...",
+                "finish-text-2": "Ora puoi coniare il tuo NFT!",
+                "button-update": "Aggiorna staffa"
+            },
+            "stats": {
+                "rank": "Rango",
+                "status": "Stato",
+                "incomplete": "Incompleto",
+                "my-stats": "Le mie statistiche",
+                "my-total-score": "Il mio punteggio totale",
+                "complete": "Completare",
+                "place": "Posto",
+                "bonus": "Bonus",
+                "points": "Punti"
+            },
+            "round-4": "Finale 4",
+            "round-5": "Finale",
+            "round-2": "Dolce 16",
+            "round-1": "2° giro",
+            "round-3": "Élite 8",
+            "round-0": "1° giro",
+            "modal-mint": {
+                "button-minting": "Conio...",
+                "finish-text-1": "Ben fatto!",
+                "button-updating": "In aggiornamento...",
+                "finish-text-2": "Ora puoi coniare il tuo NFT!",
+                "button-update": "Aggiorna staffa",
+                "update-text": "Hai già coniato il tuo NFT!",
+                "button-mint": "Come NFT"
+            },
+            "modal-share": {
+                "header": "Le mie ultime 4 scelte",
+                "user-selection": "Ho scelto il {{team}} per tagliare le reti a Houston!",
+                "share": "Condividere"
+            },
+            "share": "Condividi questa parentesi"
+        },
+        "regions": {
+            "south": "Sud",
+            "west": "ovest",
+            "east": "Est",
+            "midwest": "Midwest"
+        },
+        "home": {
+            "text-2e": "Risultato del round di 4 previsto correttamente: bonus del 10%.",
+            "time-info": "Hai {{days}} GIORNI RIMASTI PER fare una previsione",
+            "text-2": "Un modo alternativo per calcolare il bonus sarebbe quello di basarlo sul round, poiché più avanti nella fase di eliminazione di un gioco è più difficile è prevedere il risultato (poiché devi indovinare correttamente anche tutti i giochi precedenti), quindi forse :",
+            "text-2b": "Esito dei sedicesimi di finale previsto correttamente: bonus del 2%.",
+            "text-2d": "Esito degli ottavi di finale previsto correttamente: bonus del 7%.",
+            "text-2f": "Risultato finale del gioco previsto correttamente: bonus del 20%.",
+            "text-2a": "Risultato del round di 64 previsto correttamente: 1% di bonus",
+            "text-2g": "Bonus massimo qui: 32*1+16*2+8*4+4*7+2*10+20=164%",
+            "text-2c": "Esito degli ottavi di finale previsto correttamente: bonus del 4%.",
+            "title": "Benvenuti al torneo March Madness",
+            "button-create": "Crea parentesi",
+            "button-connect": "Collega il portafoglio",
+            "text-1": "March Madness è un evento NCAAB in cui 68 squadre competono in un girone eliminatorio per il campionato. L'evento inizia il 14 marzo in cui 8 squadre competono per gli ultimi 4 posti nei 64 gironi della fase a eliminazione diretta. Il conio inizia il 12 marzo e dura fino al 16 marzo, quando inizia l'evento principale.",
+            "text-3b": "Quattro finali - 10%",
+            "text-3c": "Elite Otto - 7%",
+            "text-3e": "Secondo turno - 2%",
+            "text-3f": "Primo round - 1%",
+            "text-3a": "Campionato - 20%",
+            "text-4": "Il <bold>secondo pool</bold> sarà diviso tra i detentori della fascia più accurata con un benchmark di volume di 10 sUSD sui giochi March Madness. I titolari che soddisfano il requisito di volume possono tenere traccia della loro posizione nella classifica della fascia migliore in cui i vincitori si divideranno un montepremi di 3.000 OP.",
+            "text-3d": "Dolce 16 - 4%",
+            "text-5": "Maggiori dettagli nel nostro <mediumLink>Post del blog medio</mediumLink>.",
+            "text-3": "Per il <bold>Primo pool</bold>, 10.000 OP saranno divisi tra tutti i volumi guidati attraverso i giochi March Madness, inclusi tutti i tipi di mercato e parlay con almeno un gioco NCAAB. I possessori della fascia March Madness NFT possono beneficiare di un aumento del trading. Ogni gioco corretto è idoneo per un potenziamento a più livelli, con un massimo del 164%."
+        },
+        "mobile-message": "La pagina è disponibile solo su schermi più grandi. Si prega di utilizzare la versione desktop!"
     }
 }

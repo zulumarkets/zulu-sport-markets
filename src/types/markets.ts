@@ -209,6 +209,7 @@ export type TagInfo = {
     logoClass?: string;
     favourite?: boolean;
     hidden?: boolean;
+    priority?: number;
 };
 
 export type Tags = TagInfo[];
@@ -355,4 +356,5 @@ export type SportMarketLiveResult = {
     scoreAwayByPeriod: number[];
     displayClock: string;
     sportId: number;
+    tournamentName?: string;
 };

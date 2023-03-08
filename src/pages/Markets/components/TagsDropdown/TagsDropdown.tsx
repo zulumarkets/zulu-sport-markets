@@ -30,21 +30,33 @@ const TagsDropdown: React.FC<TagsDropdownProps> = ({ open, tags, tagFilter, setT
     return (
         <Container open={open}>
             {tags
+                .filter((tag: TagInfo) => tag.id != 9153 && tag.id != 9156)
                 .sort((a, b) => {
-                    const isFavouriteA = Number(
-                        favouriteLeagues.filter((league: TagInfo) => league.id == a.id)[0].favourite
-                    );
-                    const isFavouriteB = Number(
-                        favouriteLeagues.filter((league: TagInfo) => league.id == b.id)[0].favourite
-                    );
-                    if (isFavouriteA == isFavouriteB) {
-                        return a.label > b.label ? 1 : -1;
-                    } else {
-                        return isFavouriteB - isFavouriteA;
-                    }
+                    const favouriteA = favouriteLeagues.find((league: TagInfo) => league.id == a.id);
+                    const isFavouriteA = Number(favouriteA && favouriteA.favourite);
+
+                    const favouriteB = favouriteLeagues.find((league: TagInfo) => league.id == b.id);
+                    const isFavouriteB = Number(favouriteB && favouriteB.favourite);
+
+                    const leagueNameA = favouriteA?.label || '';
+                    const leagueNameB = favouriteB?.label || '';
+
+                    const leaguePriorityA = favouriteA?.priority || 0;
+                    const leaguePriorityB = favouriteB?.priority || 0;
+
+                    return isFavouriteA == isFavouriteB
+                        ? leaguePriorityA > leaguePriorityB
+                            ? 1
+                            : leaguePriorityA < leaguePriorityB
+                            ? -1
+                            : leagueNameA > leagueNameB
+                            ? 1
+                            : -1
+                        : isFavouriteB - isFavouriteA;
                 })
                 .map((tag: TagInfo) => {
-                    const isFavourite = favouriteLeagues.filter((league: TagInfo) => league.id == tag.id)[0].favourite;
+                    const favouriteLeague = favouriteLeagues.find((favourite: TagInfo) => favourite.id == tag.id);
+                    const isFavourite = favouriteLeague && favouriteLeague.favourite;
                     return (
                         <TagContainer key={tag.id}>
                             <StarIcon

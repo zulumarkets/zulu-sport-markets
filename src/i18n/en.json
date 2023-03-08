@@ -147,6 +147,8 @@
         "medium": "Medium",
         "tutorial": "Tutorial",
         "github": "GitHub",
+        "instagram": "Instagram",
+        "reddit": "Reddit",
         "disclaimer": "This frontend is hosted decentrally on IPFS (InterPlanetary File System). It serves to visualise the blockchain data and help users interact with the Overtime contracts that belong to Thales DAO. By doing so it helps users understand the risks of using those smart contracts and what the specific interactions entail. The frontend does not facilitate anything else apart from interacting with those contracts in a visually comprehensive way. In doing so, it is no different than the functionality provided by Etherscan or RPCs (Remote Procedure Calls). The frontend itself does not belong to Thales DAO or any individual. It stores no user data and has no dedicated backend or database. All code is uploaded statically directly to the IPFS. Just as the blockchain does no geo-fencing and no KYC, neither can this frontend do so. However, by interacting with Thales DAO contracts, you commit to have read, understood and accepted <disclaimer>Thales DAO’s terms of use</disclaimer> and you take full liability in case you have not adhered to those terms. Thales DAO uses the decentralised sUSD token as collateral for all its transactions. In doing so it inherits all the usage rules from Synthetix DAO with regards to collateral and does not introduce its own."
     },
     "market": {
@@ -401,7 +403,8 @@
             },
             "labels": {
                 "language": "Language",
-                "get-started": "Get started"
+                "get-started": "Get started",
+                "march-madness": "March Madness"
             }
         },
         "parlay": {
@@ -428,6 +431,7 @@
                 "title": "Parlay Validation",
                 "max-teams": "Maximum {{max}} markets in Parlay",
                 "team-in-parlay": "{{team}} is already in Parlay. The same team can't be added to a Parlay more than once.",
+                "max-double-chances": "The maximum number of double chance markets in Parlay is {{max}}.",
                 "amount-exceeded": "Amount exceeded the amount available on AMM",
                 "max-profit": "Maximal supported profit is {{max}}",
                 "min-amount": "Minimal buy-in for a Parlay ticket is {{min}}",
@@ -778,8 +782,8 @@
     },
     "parlay-leaderboard": {
         "title": "Parlay Incentives Leaderboard",
-        "description": "A total of 5,000 OP will be distributed to the best parlays of the month. The tickets will be ranked based on the number of positions on the parlays, followed by total quote.",
-        "distribution-note": "Rewards will be distributed to the top 50 parlays for the month!",
+        "description": "A total of <bold>{{amount}}</bold> will be distributed to the best parlays on a <bold>bi-weekly basis</bold> starting from March 1st. The tickets will be ranked based on the number of positions on the parlays, followed by total quote.",
+        "distribution-note": "Rewards will be distributed to the <bold>TOP 30 parlays every 2 weeks</bold>!",
         "no-parlays": "No winning parlays registered in the period yet.",
         "warning": "*Overtime team holds the right to disqualify wallets we suspect of gaming the system.",
         "info": "If multiple parlays have the same number of positions and total quote the following will be used as tie-breakers in respective order:",
@@ -799,18 +803,80 @@
             "positions": "Positions"
         },
         "periods": {
-            "period-0": "December",
-            "period-1": "January",
-            "period-2": "February",
-            "period-3": "March",
-            "period-4": "April",
-            "period-5": "May",
-            "period-6": "June",
-            "period-7": "July",
-            "period-8": "August",
-            "period-9": "September",
-            "period-10": "October",
-            "period-11": "November"
+            "february": "February",
+            "period-end-label": "The period ends in",
+            "period-ended-label": "Period ended",
+            "bi-weekly-period": "Bi-weekly period"
         }
+    },
+    "march-madness": {
+        "back-to-markets": "Back to markets",
+        "tabs": {
+            "home": "Home",
+            "brackets": "Brackets",
+            "leaderboard": "Leaderboard"
+        },
+        "home": {
+            "title": "Welcome to March Madness tournament",
+            "time-info": "You have {{days}} {{hours}} left to mint your bracket",
+            "text-1": "<bold>March Madness</bold> is here, and with <bold>Overtime</bold> you can mint your bracket. To celebrate we are rewarding users with <bold>{{reward}}</bold> for the duration of the NCAAB tournament. The bracket NFT will help holders boost their volume rewards while granting them an entry in the bracket leaderboard. Minting is free and open from March 12th to 16th, when the first round starts.",
+            "text-2": "Minting your <bold>March Madness bracket</bold> is done fully on-chain. While the NFT minted is soulbound, it gives the holder access to a reward boost plus participation to the bracket leaderboard. The March Madness campaign is incentivized with {{reward}} and separated into 2 pools.",
+            "text-3": "For the <bold>First pool</bold>, {{reward}} will be divided between all volume driven through March Madness games, including all market type and parlay with at least one NCAAB game. Holders of the March Madness bracket NFT are eligible for a trading boost. Each correct game is eligible for a tiered boost, with a maximum of 164%.",
+            "text-3a": "Championship - 20%",
+            "text-3b": "Final Four - 10%",
+            "text-3c": "Elite Eight - 7%",
+            "text-3d": "Sweet 16 - 4%",
+            "text-3e": "Second Round - 2%",
+            "text-3f": "First Round - 1%",
+            "text-4": "The <bold>second pool</bold> will be divided between the holders of the most accurate bracket with a {{volume}} volume benchmark on March Madness games. Holders that meet the volume requirement can track their position in the best bracket leaderboard where winners will split a {{reward}} reward pool.",
+            "text-5": "More detail in our <mediumLink>Medium blog post</mediumLink>.",
+            "button-create": "Mint bracket",
+            "button-connect": "Connect wallet"
+        },
+        "brackets": {
+            "team-1": "Team 1",
+            "team-2": "Team 2",
+            "submit": "Finish Bracket",
+            "submit-modify": "Update Bracket",
+            "round-0": "1st Round",
+            "round-1": "2nd Round",
+            "round-2": "Sweet 16",
+            "round-3": "Elite 8",
+            "round-4": "Final 4",
+            "round-5": "Final",
+            "stats": {
+                "my-stats": "My stats",
+                "status": "Status",
+                "rank": "Rank",
+                "complete": "Complete",
+                "incomplete": "Incomplete",
+                "place": "Place",
+                "my-total-score": "My total score",
+                "points": "Points",
+                "bonus": "Bonus"
+            },
+            "modal-mint": {
+                "finish-text-1": "Well done!",
+                "finish-text-2": "Now you can mint your NFT!",
+                "update-text": "You have already minted your NFT!",
+                "button-mint": "Mint NFT",
+                "button-minting": "Minting...",
+                "button-update": "Update Bracket",
+                "button-updating": "Updating..."
+            },
+            "share": "Share this bracket",
+            "modal-share": {
+                "header": "My final 4 picks",
+                "user-selection": "I picked the {{team}} to cut the nets down in Houston!",
+                "share": "Share"
+            }
+        },
+        "regions": {
+            "east": "East",
+            "west": "West",
+            "south": "South",
+            "midwest": "Midwest"
+        },
+        "mobile-message": "Page is only available on bigger screens. Please use desktop version!"
     }
 }
