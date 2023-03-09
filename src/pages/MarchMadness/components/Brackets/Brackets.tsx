@@ -375,7 +375,6 @@ const Brackets: React.FC = () => {
                     setIsSubmitDisabled(true);
                     setIsUpdating(false);
                     setIsMinting(false);
-                    setShowMintNFTModal(false);
                 }
             } catch (e) {
                 setIsUpdating(false);
@@ -476,7 +475,7 @@ const Brackets: React.FC = () => {
     };
 
     const onTwitterIconClick = () => {
-        if (!isSubmitDisabled) {
+        if (!isShareDisabled) {
             setShowShareModal(true);
         }
     };

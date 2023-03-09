@@ -867,7 +867,13 @@
                 "button-minting": "铸币...",
                 "finish-text-2": "现在你可以铸造你的 NFT 了！",
                 "button-update": "更新支架",
-                "button-mint": "喜欢NFT"
+                "button-mint": "喜欢NFT",
+                "finish-text-1-success": "恭喜！",
+                "update-text-1": "做得很好！",
+                "finish-text-2-success": "您刚刚铸造了您的 March Madness 支架！",
+                "update-text-2": "我们保存了您的括号预测，请立即更新您的括号！",
+                "finish-text-3-success": "前往 <marketsLink>NCAAB 市场</marketsLink> 并开始赚取奖励！",
+                "finish-info": "*March Madness 支架 NFT 是一种 Overtime NFT，它允许持有者通过创建自己的预测锦标赛支架来参与 Overtime March Madness 活动。"
             },
             "modal-share": {
                 "share": "分享",
@@ -906,6 +912,20 @@
             "text-4": "<bold>第二个池子</bold> 将在 March Madness 游戏中以 10 sUSD 交易量为基准的最准确支架的持有者之间分配。满足数量要求的持有者可以跟踪他们在最佳组别排行榜中的位置，获胜者将在其中瓜分 3,000 OP 奖励池。",
             "text-3c": "精英八强 - 7%"
         },
-        "mobile-message": "页面仅在更大的屏幕上可用。请使用桌面版！"
+        "mobile-message": "页面仅在更大的屏幕上可用。请使用桌面版！",
+        "leaderboard": {
+            "address": "地址",
+            "rewards": "奖励",
+            "base-volume": "根据",
+            "volume": "体积",
+            "owner": "所有者",
+            "bonus-volume": "奖金",
+            "player": "播放器",
+            "search-placeholder": "搜索钱包地址",
+            "rank": "秩",
+            "guessed-games": "猜谜游戏",
+            "no-data": "目前没有可用数据"
+        },
+        "test-info": "测试阶段现已开放样本团队，2023 年选择将于 3 月 12 日开放！"
     }
 }
