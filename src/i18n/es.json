@@ -192,7 +192,7 @@
                 "history": "Tus transacciones",
                 "archivedmarkets": "Mercados archivados",
                 "tooltip": "Mercados resueltos hace más de 7 días",
-                "openmarkets": "Todos",
+                "openmarkets": "Abierto",
                 "resolvedmarkets": "Acabado",
                 "allmarkets": "Todos",
                 "canceled": "En pausa / Cancelado",
@@ -223,7 +223,7 @@
         },
         "back-to-markets": "Volver a los mercados",
         "back-to-market": "Volver al mercado",
-        "no-markets-found": "Mercados no encontrados",
+        "no-markets-found": "Mercados no encontrados para",
         "view-all-markets": "Ver todos los mercados",
         "table": {
             "title": "Actividad reciente",

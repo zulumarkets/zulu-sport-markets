@@ -194,7 +194,7 @@
                 "tooltip": "Märkte aufgelöst vor mehr als 7 Tagen",
                 "resolvedmarkets": "Fertig",
                 "allmarkets": "Alle",
-                "openmarkets": "Alle",
+                "openmarkets": "Offen",
                 "canceled": "Angehalten / Abgebrochen",
                 "pendingmarkets": "Laufend"
             },
@@ -223,7 +223,7 @@
         },
         "back-to-markets": "Zurück zu den Märkten",
         "back-to-market": "Zurück zum Markt",
-        "no-markets-found": "Keine Märkte gefunden",
+        "no-markets-found": "Keine Märkte gefunden für",
         "view-all-markets": "Alle Märkte anzeigen",
         "table": {
             "title": "Neueste Aktivität",
